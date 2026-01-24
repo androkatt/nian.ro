@@ -1,0 +1,31 @@
+Role: Senior Frontend & WebGL Developer. Task: Create a highly polished, interactive 3D Tag Cloud using three.js and PHP 8.x for the backend/server-side structure.
+
+Core Visuals:
+
+Data: Create an array of 20 DevOps objects (name and logo URL). Include AWS, Docker, Kubernetes, Terraform, Jenkins, etc.
+
+Structure: Arrange these 20 logos in a 3D sphere using spherical coordinate math. Half the logos should be on the outer surface (Radius: 10) and half should be floating in the inner depth (Radius: 5) to create a layered effect.
+
+Links: Connect every logo to its 3 nearest neighbors using MeshLine or CylinderGeometry to ensure the lines have a "thic" visual weight. The lines MUST be bright red and exist in 3D space, connecting outer nodes to inner nodes.
+
+Nodes: Each node should consist of:
+
+A high-quality logo (using THREE.Sprite or a Plane reflecting the texture).
+
+A label underneath using CSS2DRenderer or CanvasTexture showing the software name.
+
+Interactivity & Animation:
+
+Default State: The entire group should have a slow, elegant "auto-drift" rotation on the Y and X axes.
+
+Mouse Interaction: > - Hover: When the mouse hovers over a logo, it should scale up slightly (1.2x) and the red lines connected to it should glow or increase in opacity.
+
+Drag: Implement OrbitControls but allow for manual clicking and "tossing" of the sphere. The movement must be extremely smooth with high damping (inertia) so it feels premium, not laggy.
+
+Focus: Ensure the labels always face the camera (billboarding).
+
+Technical Constraints:
+
+Performance: Use requestAnimationFrame for the loop. Use a single geometry for lines if possible to minimize draw calls.
+
+Code Style: Write clean, modern JavaScript. 
