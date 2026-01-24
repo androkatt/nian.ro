@@ -16,8 +16,8 @@ const Hero = () => {
           <div className="hero-buttons">
             <a href="#contact" className="btn">Get in Touch</a>
             <div className="social-icons">
-              <a href="#" aria-label="LinkedIn"><i className="fa-brands fa-linkedin-in"></i></a>
-              <a href="#" aria-label="GitHub"><i className="fa-brands fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/nicolae-andrei/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i className="fa-brands fa-linkedin-in"></i></a>
+              <a href="https://github.com/androkatt" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i className="fa-brands fa-github"></i></a>
             </div>
           </div>
         </div>
