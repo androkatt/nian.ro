@@ -11,10 +11,11 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve Static Files
-app.use(express.static(path.join(__dirname, '../client/dist')));
+// --- MODIFICAREA ESTE AICI (1) ---
+// Pe server, React-ul va fi copiat în folderul 'public' de lângă app.js
+app.use(express.static(path.join(__dirname, 'public')));
 
-// --- EMAIL CONFIGURATION ---
+// --- EMAIL CONFIGURATION (Rămâne neschimbat) ---
 const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
@@ -24,25 +25,20 @@ const transporter = nodemailer.createTransport({
         pass: process.env.EMAIL_PASS
     },
     tls: {
-        // This is the Magic Fix: it allows self-signed certificates on shared hosting
         rejectUnauthorized: false 
     }
 });
 
 // --- ROUTES ---
 
-// 1. Home Route (Handled by Static & Catch-all)
-// app.get('/', ...);
-
-// 2. Email Sending Route (POST)
+// app.post('/api/send-email'...) -> RĂMÂNE LA FEL (Nu îl mai copiez ca să nu ocup spațiu, e perfect)
 app.post('/api/send-email', async (req, res) => {
     const { name, email, phone, subject, message } = req.body;
-
-    // Email Content Structure
+    // ... restul codului tău de email ...
     const mailOptions = {
-        from: `"Website Contact" <${process.env.EMAIL_USER}>`, // Sender address
-        to: process.env.EMAIL_USER, // Receiver address (You)
-        replyTo: email, // When you hit reply, it goes to the client
+        from: `"Website Contact" <${process.env.EMAIL_USER}>`,
+        to: process.env.EMAIL_USER,
+        replyTo: email,
         subject: `New Message: ${subject || 'No Subject'}`,
         html: `
             <h3>New Contact Form Submission</h3>
@@ -65,9 +61,11 @@ app.post('/api/send-email', async (req, res) => {
     }
 });
 
-// 3. SPA Catch-all Route
+// --- MODIFICAREA ESTE AICI (2) ---
+// SPA Catch-all Route
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+    // Căutăm index.html tot în 'public', nu în '../client/dist'
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Start Server
