@@ -19,8 +19,8 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # Folderul de pe server unde e site-ul
-          server-dir: /cv.nian.ro/
+          # FARA SLASH la inceput! Asta e cheia.
+          server-dir: cv.nian.ro/
           local-dir: ./
           exclude: |
             **/.git*
@@ -30,7 +30,6 @@ jobs:
             .github/**
 
       - name: 🔄 Trigger Restart
-        # Cream fisierul restart.txt si il urcam rapid
         run: |
           mkdir -p tmp
           echo "restart" > tmp/restart.txt
@@ -41,5 +40,5 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /cv.nian.ro/tmp/
+          server-dir: cv.nian.ro/tmp/
           local-dir: ./tmp/
