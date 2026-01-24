@@ -12,7 +12,7 @@ const Footer = () => {
       <div className="container" style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', padding: '20px 0', alignItems: 'center' }}>
         <p>&copy; {year} Nicolae Andrei-Gabriel.</p>
         <div style={{ fontSize: '0.9em' }}>
-          <a href="https://tools.nian.ro/privacy-policy" style={{ color: '#666', textDecoration: 'none' }}>Privacy Policy</a>
+          <a href="/privacy.html" style={{ color: '#666', textDecoration: 'none' }}>Privacy Policy</a>
         </div>
       </div>
     </footer>
