@@ -32,7 +32,7 @@ jobs:
       - name: 🔄 Trigger Restart
         run: |
           mkdir -p tmp
-          echo "restart" > tmp/restart.txt
+          date > tmp/restart.txt
       
       - name: 🚀 Upload Restart Trigger
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
