@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const nodemailer = require('nodemailer');
@@ -15,12 +16,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // --- EMAIL CONFIGURATION ---
 const transporter = nodemailer.createTransport({
-    host: 'mail.nian.ro',  // Changed from 'localhost' to your actual mail domain
-    port: 465,             // Secure port
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
     secure: true,          // Use SSL
     auth: {
-        user: 'andrei@nian.ro',
-        pass: 'Nicolga001!'// <--- MAKE SURE THIS IS CORRECT
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
     },
     tls: {
         // This is the Magic Fix: it allows self-signed certificates on shared hosting
@@ -41,8 +42,8 @@ app.post('/send-email', async (req, res) => {
 
     // Email Content Structure
     const mailOptions = {
-        from: '"Website Contact" <andrei@nian.ro>', // Sender address
-        to: 'andrei@nian.ro', // Receiver address (You)
+        from: `"Website Contact" <${process.env.EMAIL_USER}>`, // Sender address
+        to: process.env.EMAIL_USER, // Receiver address (You)
         replyTo: email, // When you hit reply, it goes to the client
         subject: `New Message: ${subject || 'No Subject'}`,
         html: `
