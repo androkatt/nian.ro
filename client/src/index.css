@@ -1210,3 +1210,22 @@ input::placeholder, textarea::placeholder {
         grid-template-columns: 1fr; /* Stack vertically on mobile */
     }
 }
+
+/* =========================================
+   TAG CLOUD (HERO)
+   ========================================= */
+.tagcloud {
+  font-family: 'Jost', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.tagcloud--item {
+  transition: color 0.3s;
+}
+
+.tagcloud--item:hover {
+  color: var(--dizme-orange);
+}

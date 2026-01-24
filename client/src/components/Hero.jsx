@@ -1,6 +1,39 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import TagCloud from 'TagCloud';
 
 const Hero = () => {
+  const containerRef = useRef(null);
+  const initializedRef = useRef(false);
+
+  useEffect(() => {
+    if (initializedRef.current) return;
+
+    const texts = [
+      'AWS', 'Kubernetes', 'Docker', 'Terraform', 
+      'Ansible', 'Jenkins', 'Python', 'Node.js', 
+      'React', 'Linux', 'Git', 'CI/CD', 
+      'Prometheus', 'Grafana', 'Go', 'Bash',
+      'Azure', 'SQL', 'NoSQL', 'Nginx'
+    ];
+
+    const options = {
+      radius: 300,
+      maxSpeed: 'fast',
+      initSpeed: 'normal',
+      direction: 135,
+      keep: true,
+      useContainerInlineStyles: false
+    };
+
+    if (containerRef.current) {
+      TagCloud(containerRef.current, texts, options);
+      initializedRef.current = true;
+    }
+
+    // Cleanup isn't straightforward with this library instance, 
+    // but the ref check prevents double-mounting.
+  }, []);
+
   return (
     <section id="home" className="hero-section">
       <div className="container hero-grid">
@@ -22,20 +55,8 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className="hero-image-wrapper">
-          <img src="https://dizme-vue.vercel.app/img/slider/avatar.png" alt="Nicolae Andrei Avatar" className="hero-avatar" />
-
-          <div className="floater icon-infra">
-            <i className="fa-solid fa-server"></i>
-          </div>
-
-          <div className="floater icon-dev">
-            <i className="fa-solid fa-code"></i>
-          </div>
-
-          <div className="floater icon-design">
-            <i className="fa-solid fa-cloud"></i>
-          </div>
+        <div className="hero-image-wrapper" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <span className="tagcloud-wrap" ref={containerRef}></span>
         </div>
       </div>
 
