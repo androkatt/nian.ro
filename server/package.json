@@ -1,0 +1,14 @@
+{
+  "name": "cv-nian-ro",
+  "version": "1.0.0",
+  "description": "Portofoliu Profesional Node.js",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^4.18.2",
+    "nodemailer": "^6.9.7"
+  }
+}
