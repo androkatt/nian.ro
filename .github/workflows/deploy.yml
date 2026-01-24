@@ -13,15 +13,16 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
       
-      - name: 📂 Sync files via FTP
+      - name: 📂 Sync SERVER files via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # FARA SLASH la inceput! Asta e cheia.
+          # Unde ajung fișierele pe Hostico:
           server-dir: cv.nian.ro/
-          local-dir: ./
+          # DE AICI luăm fișierele (din folderul server):
+          local-dir: ./server/
           exclude: |
             **/.git*
             **/.git*/**
@@ -40,5 +41,6 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          # Restartul ajunge tot unde trebuie
           server-dir: cv.nian.ro/tmp/
           local-dir: ./tmp/
