@@ -1,31 +1,53 @@
-Role: Senior Frontend & WebGL Developer. Task: Create a highly polished, interactive 3D Tag Cloud using three.js and PHP 8.x for the backend/server-side structure.
+Role: Lead Creative Technologist (Award-Winning Portfolio Division).
 
-Core Visuals:
+Objective: Create a "Showstopper" Interactive DevOps Visualization (CyberPipeline.jsx) that replaces a static image.
 
-Data: Create an array of 20 DevOps objects (name and logo URL). Include AWS, Docker, Kubernetes, Terraform, Jenkins, etc.
+CRITICAL FEEDBACK ON PREVIOUS ITERATION: The previous result was "dull" and "too simple." It looked like a PowerPoint slide. Requirement: The new version must look like a Holographic HUD or a Living Circuit Board. It needs "Energy," "Depth," and "Complexity."
 
-Structure: Arrange these 20 logos in a 3D sphere using spherical coordinate math. Half the logos should be on the outer surface (Radius: 10) and half should be floating in the inner depth (Radius: 5) to create a layered effect.
+The Visual Language (Cyber-Nervous System):
 
-Links: Connect every logo to its 3 nearest neighbors using MeshLine or CylinderGeometry to ensure the lines have a "thic" visual weight. The lines MUST be bright red and exist in 3D space, connecting outer nodes to inner nodes.
+The Environment:
 
-Nodes: Each node should consist of:
+Add a subtle Perspective Grid (retro-wave style) on the floor that moves slowly to create 3D depth.
 
-A high-quality logo (using THREE.Sprite or a Plane reflecting the texture).
+Background: Deep void (#030712) with faint floating binary or hex codes fading in/out.
 
-A label underneath using CSS2DRenderer or CanvasTexture showing the software name.
+The Nodes (The "Reactors"):
 
-Interactivity & Animation:
+Shape: Hexagons (Tech aesthetic) instead of Circles.
 
-Default State: The entire group should have a slow, elegant "auto-drift" rotation on the Y and X axes.
+Style: Glassmorphism (semi-transparent backgrounds with white borders).
 
-Mouse Interaction: > - Hover: When the mouse hovers over a logo, it should scale up slightly (1.2x) and the red lines connected to it should glow or increase in opacity.
+Activity: Add "Orbital Rings" (dashed lines) spinning slowly around the active nodes.
 
-Drag: Implement OrbitControls but allow for manual clicking and "tossing" of the sphere. The movement must be extremely smooth with high damping (inertia) so it feels premium, not laggy.
+The Connections (The "Data Highways"):
 
-Focus: Ensure the labels always face the camera (billboarding).
+Use Dual-Line Cabling: One static dark cable (the rail) and one pulsing bright cable (energy).
 
-Technical Constraints:
+Effect: Use SVG Gradients (Cyan to Purple) for the lines. Do not use solid colors.
 
-Performance: Use requestAnimationFrame for the loop. Use a single geometry for lines if possible to minimize draw calls.
+The Energy (The "WOW" Factor"):
 
-Code Style: Write clean, modern JavaScript. 
+Particles: Instead of simple dots, use "Comets" (heads with fading tails) racing along the paths.
+
+Neon Glow: You MUST define an SVG <filter id="neon-glow"> (Gaussian Blur) and apply it to the active cables and particles so they actually glow against the dark background.
+
+The Architecture (Isometric Flow): Arrange the 5 nodes (GitHub, Jenkins, Docker, K8s, AWS) in a Zig-Zag or Isometric Step pattern (like a waterfall), not a flat line. This fills the vertical space better.
+
+Interactivity:
+
+Hover: When hovering a node (e.g., Docker):
+
+The "Orbital Rings" spin faster (animation-duration: 1s).
+
+The Node Hexagon fills with the brand color.
+
+A "Holographic Card" projects upwards (Y-axis translation) showing the tech specs.
+
+Tech Stack:
+
+React + Tailwind CSS.
+
+Pure SVG & CSS Modules: Use <defs> for gradients/filters. Use CSS @keyframes for the spinning rings and floating data.
+
+Output: Provide the single file CyberPipeline.jsx. Include the SVG Filter definitions clearly at the top of the JSX.

@@ -349,6 +349,9 @@ footer {
     
     /* Skills */
     .skills-grid { grid-template-columns: 1fr; }
+
+    /* Hide 3D Scene on Mobile/Tablet */
+    .hidden-mobile { display: none !important; }
 }
 /* =========================================
    PORTFOLIO SECTION STYLES

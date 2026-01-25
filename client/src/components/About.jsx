@@ -1,26 +1,17 @@
 import React from 'react';
+import CyberPipeline from './CyberPipeline';
 
 const About = () => {
   return (
     <section id="about" className="about-section">
       <div className="container about-grid">
-        <div className="about-left">
-          <div className="image-wrapper">
-            <img src="https://dizme-vue.vercel.app/img/about/2.jpg" alt="About Me" className="about-main-img" />
-
-            <div className="stats-card card-1">
-              <div className="stats-number text-green">
-                <span className="counter">18</span>+
-              </div>
-              <div className="stats-text">Years of<br />Professional Exp.</div>
-            </div>
-
-            <div className="stats-card card-2">
-              <div className="stats-number text-purple">
-                <span className="counter">30</span>+
-              </div>
-              <div className="stats-text">Projects<br />Delivered</div>
-            </div>
+        <div className="about-left" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+          {/* 
+            Container for the Cyber Pipeline.
+            Ensures it takes full width available and maintains aspect ratio.
+          */}
+          <div className="image-wrapper" style={{ width: '100%', height: 'auto', minHeight: '600px' }}>
+            <CyberPipeline />
           </div>
         </div>
 
