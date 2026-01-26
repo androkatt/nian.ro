@@ -1,10 +1,106 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Portfolio = () => {
   const [filter, setFilter] = useState('all');
+  const [toolCount, setToolCount] = useState(null);
+  const [displayCount, setDisplayCount] = useState(0);
+
+  // Fetch tool count from tools.nian.ro sitemap or fallback
+  useEffect(() => {
+    const fetchToolCount = async () => {
+      try {
+        const response = await fetch('https://tools.nian.ro/sitemap.xml');
+        if (!response.ok) throw new Error('Network response was not ok');
+        
+        const text = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(text, "text/xml");
+        const urls = xmlDoc.getElementsByTagName("loc");
+        
+        const allUrls = Array.from(urls).map(el => el.textContent);
+        
+        // Revised Logic: Count Unique Slugs
+        const uniqueSlugs = new Set();
+
+        allUrls.forEach(url => {
+            try {
+                const path = new URL(url).pathname;
+                
+                // Remove trailing slash
+                const cleanPath = path.endsWith('/') ? path.slice(0, -1) : path;
+                
+                // Split path segments
+                const parts = cleanPath.split('/').filter(p => p.length > 0);
+                
+                // Identify the "slug"
+                // e.g., /en/tool-name -> 'tool-name'
+                // e.g., /ro/tool-name -> 'tool-name'
+                // e.g., /tool-name    -> 'tool-name'
+                
+                let slug = '';
+                
+                if (parts.length === 0) return; // Homepage root
+
+                if (parts[0] === 'en' || parts[0] === 'ro') {
+                    if (parts.length > 1) {
+                        slug = parts[1]; // The tool name after lang code
+                    } else {
+                        return; // Just /en or /ro homepage
+                    }
+                } else {
+                    slug = parts[0]; // Tool name at root level
+                }
+
+                if (slug) {
+                    uniqueSlugs.add(slug);
+                }
+            } catch {
+                // Ignore invalid URLs
+            }
+        });
+
+        const uniqueCount = uniqueSlugs.size;
+        console.log("Calculated Tool Count:", uniqueCount);
+        
+        if (uniqueCount > 0) {
+            setToolCount(uniqueCount);
+        } else {
+            setToolCount(55); // Fallback
+        }
+
+      } catch (error) {
+        console.warn("Could not auto-fetch tool count. Using fallback.", error);
+        setToolCount(55); 
+      }
+    };
+
+    fetchToolCount();
+  }, []);
+
+  // Animation effect for the number
+  useEffect(() => {
+    if (toolCount === null) return;
+    
+    let start = 0;
+    const end = toolCount;
+    const duration = 1500;
+    const increment = end / (duration / 16);
+    
+    const timer = setInterval(() => {
+      start += increment;
+      if (start >= end) {
+        setDisplayCount(end);
+        clearInterval(timer);
+      } else {
+        setDisplayCount(Math.floor(start));
+      }
+    }, 16);
+
+    return () => clearInterval(timer);
+  }, [toolCount]);
 
   const projects = [
-    { id: 1, category: 'web', title: 'Nian Tools', type: 'Utility Hub', img: 'https://placehold.co/600x800/1e293b/white?text=tools.nian.ro', link: 'https://tools.nian.ro', tall: true },
+    { id: 1, category: 'web', title: 'Nian Tools', type: 'Utility Hub', link: 'https://tools.nian.ro', tall: true, isSpecial: true },
     { id: 2, category: 'web', title: 'Nian Tasks', type: 'Task Management', img: 'https://placehold.co/600x400/334155/white?text=tasks.nian.ro', link: 'https://tasks.nian.ro', tall: false },
     { id: 3, category: 'youtube', title: 'Tech Insights', type: 'YouTube Channel', img: 'https://placehold.co/600x800/ef4444/white?text=YouTube+Channel', link: 'https://www.youtube.com/@andreinicolae8305/videos', tall: true },
     { id: 4, category: 'cloud', title: 'Cloud Infrastructure', type: 'AWS & Kubernetes', img: 'https://placehold.co/600x800/0ea5e9/white?text=Infrastructure', tall: true },
@@ -45,13 +141,93 @@ const Portfolio = () => {
               key={project.id}
               className={`portfolio-item ${project.tall ? 'tall' : ''} ${filter === 'all' || filter === project.category ? 'show' : 'hide'}`}
             >
-              <a href={project.link || "#"} target={project.link ? "_blank" : "_self"} rel="noopener noreferrer" className="item-inner">
-                <img src={project.img} alt={project.title} />
-                <div className="portfolio-info">
-                  <h4>{project.title}</h4>
-                  <span>{project.type}</span>
+              {project.isSpecial ? (
+                <div 
+                  className="item-inner" 
+                  style={{
+                    height: '100%',
+                    background: 'linear-gradient(to bottom right, #1d4ed8, #4f46e5, #06b6d4)',
+                    color: 'white',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: '2.5rem',
+                    textAlign: 'center',
+                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}
+                >
+                    <div style={{ position: 'absolute', top: '10%', left: '10%', fontSize: '3rem', opacity: 0.1, fontWeight: 'bold' }}>{"{ }"}</div>
+                    <div style={{ position: 'absolute', bottom: '15%', right: '15%', fontSize: '4rem', opacity: 0.1, fontWeight: 'bold' }}>{"</>"}</div>
+
+                    <h3 style={{ 
+                        fontSize: '2.2rem', 
+                        fontWeight: '800', 
+                        marginBottom: '0.5rem',
+                        letterSpacing: '-0.02em'
+                    }}>
+                        NIAN TOOLS
+                    </h3>
+                    
+                    <div style={{
+                        fontSize: '3.5rem',
+                        fontWeight: '900',
+                        margin: '1rem 0',
+                        textShadow: '0 0 20px rgba(255,255,255,0.3)'
+                    }}>
+                        {displayCount}+
+                    </div>
+
+                    <p style={{ 
+                        fontSize: '1.1rem', 
+                        marginBottom: '2rem',
+                        maxWidth: '280px',
+                        lineHeight: '1.4',
+                        opacity: 0.9
+                    }}>
+                        Free developer tools, converters, and utilities built for efficiency.
+                    </p>
+
+                    <a 
+                        href={project.link} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        style={{
+                            backgroundColor: 'white',
+                            color: '#1d4ed8',
+                            border: 'none',
+                            fontWeight: '800',
+                            padding: '14px 35px',
+                            borderRadius: '50px',
+                            cursor: 'pointer',
+                            textDecoration: 'none',
+                            transition: 'all 0.3s ease',
+                            display: 'inline-block',
+                            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.2)'
+                        }}
+                        onMouseOver={(e) => {
+                            e.currentTarget.style.transform = 'translateY(-3px) scale(1.05)';
+                            e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.3)';
+                        }}
+                        onMouseOut={(e) => {
+                            e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                            e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.2)';
+                        }}
+                    >
+                        Discover more
+                    </a>
                 </div>
-              </a>
+              ) : (
+                <a href={project.link || "#"} target={project.link ? "_blank" : "_self"} rel="noopener noreferrer" className="item-inner">
+                  <img src={project.img} alt={project.title} />
+                  <div className="portfolio-info">
+                    <h4>{project.title}</h4>
+                    <span>{project.type}</span>
+                  </div>
+                </a>
+              )}
             </div>
           ))}
         </div>
