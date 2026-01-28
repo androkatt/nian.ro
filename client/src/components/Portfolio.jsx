@@ -19,58 +19,25 @@ const Portfolio = () => {
         
         const allUrls = Array.from(urls).map(el => el.textContent);
         
-        // Revised Logic: Count Unique Slugs
-        const uniqueSlugs = new Set();
-
-        allUrls.forEach(url => {
-            try {
-                const path = new URL(url).pathname;
-                
-                // Remove trailing slash
-                const cleanPath = path.endsWith('/') ? path.slice(0, -1) : path;
-                
-                // Split path segments
-                const parts = cleanPath.split('/').filter(p => p.length > 0);
-                
-                // Identify the "slug"
-                // e.g., /en/tool-name -> 'tool-name'
-                // e.g., /ro/tool-name -> 'tool-name'
-                // e.g., /tool-name    -> 'tool-name'
-                
-                let slug = '';
-                
-                if (parts.length === 0) return; // Homepage root
-
-                if (parts[0] === 'en' || parts[0] === 'ro') {
-                    if (parts.length > 1) {
-                        slug = parts[1]; // The tool name after lang code
-                    } else {
-                        return; // Just /en or /ro homepage
-                    }
-                } else {
-                    slug = parts[0]; // Tool name at root level
-                }
-
-                if (slug) {
-                    uniqueSlugs.add(slug);
-                }
-            } catch {
-                // Ignore invalid URLs
-            }
+        // Revised Logic: Count ONLY /en/ tools
+        // This avoids duplication and focuses on the primary content.
+        const enTools = allUrls.filter(url => {
+            const path = new URL(url).pathname;
+            // Matches /en/something but NOT just /en or /en/
+            return path.startsWith('/en/') && path.length > 4;
         });
 
-        const uniqueCount = uniqueSlugs.size;
-        console.log("Calculated Tool Count:", uniqueCount);
+        const uniqueCount = enTools.length;
         
         if (uniqueCount > 0) {
             setToolCount(uniqueCount);
         } else {
-            setToolCount(55); // Fallback
+            setToolCount(69); // Updated fallback to your expected number
         }
 
       } catch (error) {
         console.warn("Could not auto-fetch tool count. Using fallback.", error);
-        setToolCount(55); 
+        setToolCount(69); // Updated fallback to your expected number
       }
     };
 
@@ -177,7 +144,7 @@ const Portfolio = () => {
                         margin: '1rem 0',
                         textShadow: '0 0 20px rgba(255,255,255,0.3)'
                     }}>
-                        {displayCount}+
+                        {displayCount}
                     </div>
 
                     <p style={{ 
