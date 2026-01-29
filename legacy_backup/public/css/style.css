@@ -5,9 +5,9 @@
 
 :root {
     /* Color Palette */
-    --dizme-orange: #f75023;
-    --dizme-dark: #131313;
-    --dizme-card: #1c1c1c;
+    --nian-orange: #f75023;
+    --nian-dark: #131313;
+    --nian-card: #1c1c1c;
     --text-white: #ffffff;
     --text-muted: #aebbcc;
     --nav-bg: rgba(19, 19, 19, 0.95);
@@ -26,7 +26,7 @@ html { scroll-behavior: smooth; }
 
 body {
     font-family: 'Jost', sans-serif;
-    background-color: var(--dizme-dark);
+    background-color: var(--nian-dark);
     color: var(--text-white);
     line-height: 1.6;
     overflow-x: hidden;
@@ -44,7 +44,7 @@ ul { list-style: none; }
 
 /* Common Typography */
 .subtitle {
-    color: var(--dizme-orange);
+    color: var(--nian-orange);
     font-size: 1.3rem;
     font-weight: 500;
     margin-bottom: 10px;
@@ -66,11 +66,11 @@ ul { list-style: none; }
 
 .text-green { color: var(--text-green); }
 .text-purple { color: var(--text-purple); }
-.text-orange { color: var(--dizme-orange); }
+.text-orange { color: var(--nian-orange); }
 
 /* Standard Button */
 .btn {
-    background-color: var(--dizme-orange);
+    background-color: var(--nian-orange);
     color: #fff;
     padding: 12px 35px;
     border-radius: 50px;
@@ -120,7 +120,7 @@ ul { list-style: none; }
     justify-content: center;
     width: 35px;
     height: 35px;
-    background: var(--dizme-orange);
+    background: var(--nian-orange);
     color: white;
     border-radius: 50% 50% 0 50%;
     font-size: 18px;
@@ -135,12 +135,12 @@ ul { list-style: none; }
     font-size: 16px;
     transition: color 0.3s;
 }
-.nav-links a:hover, .nav-links a.active { color: var(--dizme-orange); }
+.nav-links a:hover, .nav-links a.active { color: var(--nian-orange); }
 
 /* Buttons */
 .btn-download {
     padding: 10px 30px;
-    border: 2px solid var(--dizme-orange);
+    border: 2px solid var(--nian-orange);
     border-radius: 50px;
     color: var(--text-white);
     font-weight: 500;
@@ -148,7 +148,7 @@ ul { list-style: none; }
     transition: all 0.3s ease;
 }
 .btn-download:hover {
-    background-color: var(--dizme-orange);
+    background-color: var(--nian-orange);
     box-shadow: 0 0 15px rgba(247, 80, 35, 0.5);
 }
 
@@ -170,7 +170,7 @@ ul { list-style: none; }
     align-items: center;
 }
 
-.hello-text { color: var(--dizme-orange); font-size: 1.5rem; font-weight: 500; margin-bottom: 10px; }
+.hello-text { color: var(--nian-orange); font-size: 1.5rem; font-weight: 500; margin-bottom: 10px; }
 .hero-name { font-size: 5rem; font-weight: 800; line-height: 1.1; margin-bottom: 15px; }
 .hero-tagline { font-size: 1.5rem; font-weight: 500; margin-bottom: 25px; }
 
@@ -178,7 +178,7 @@ ul { list-style: none; }
 
 .social-icons { display: flex; gap: 20px; }
 .social-icons a { color: var(--text-white); font-size: 18px; transition: color 0.3s; }
-.social-icons a:hover { color: var(--dizme-orange); }
+.social-icons a:hover { color: var(--nian-orange); }
 
 /* Hero Image & Animations */
 .hero-image-wrapper { position: relative; display: flex; justify-content: center; }
@@ -202,8 +202,8 @@ ul { list-style: none; }
     top: 15%;
     left: 0;
     background: #2b2d33;
-    border: 1px solid var(--dizme-orange);
-    color: var(--dizme-orange);
+    border: 1px solid var(--nian-orange);
+    color: var(--nian-orange);
     animation-delay: 0s;
 }
 
@@ -253,9 +253,9 @@ ul { list-style: none; }
     width: 30px; height: 50px; border: 2px solid var(--text-muted); border-radius: 20px;
     display: flex; justify-content: center; padding-top: 10px; cursor: pointer; transition: 0.3s;
 }
-.mouse-icon:hover { border-color: var(--dizme-orange); }
+.mouse-icon:hover { border-color: var(--nian-orange); }
 .wheel {
-    width: 4px; height: 8px; background-color: var(--dizme-orange); border-radius: 2px;
+    width: 4px; height: 8px; background-color: var(--nian-orange); border-radius: 2px;
     animation: scrollWheel 2s infinite;
 }
 @keyframes scrollWheel {
@@ -266,7 +266,7 @@ ul { list-style: none; }
 /* =========================================
    5. ABOUT SECTION
    ========================================= */
-.about-section { padding: 100px 0; background-color: var(--dizme-dark); }
+.about-section { padding: 100px 0; background-color: var(--nian-dark); }
 
 .about-grid {
     display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
@@ -308,21 +308,21 @@ ul { list-style: none; }
 /* =========================================
    6. SKILLS SECTION
    ========================================= */
-.skills-section { padding: 100px 0; background-color: var(--dizme-card); }
+.skills-section { padding: 100px 0; background-color: var(--nian-card); }
 
 .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
 
 .skill-bar { margin-bottom: 30px; }
 .skill-info { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 500; font-size: 1.1rem; }
 .progress-bg { width: 100%; height: 8px; background: #000; border-radius: 10px; overflow: hidden; }
-.progress-fill { height: 100%; background: var(--dizme-orange); border-radius: 10px; }
+.progress-fill { height: 100%; background: var(--nian-orange); border-radius: 10px; }
 
 /* =========================================
    7. FOOTER
    ========================================= */
 footer {
     text-align: center; padding: 50px 20px; border-top: 1px solid rgba(255, 255, 255, 0.05);
-    background-color: var(--dizme-dark); color: var(--text-muted);
+    background-color: var(--nian-dark); color: var(--text-muted);
 }
 
 /* =========================================
@@ -354,7 +354,7 @@ footer {
 
 .portfolio-section {
     padding: 100px 0;
-    background-color: var(--dizme-dark); /* Matches site theme */
+    background-color: var(--nian-dark); /* Matches site theme */
 }
 
 .text-center { text-align: center; }
@@ -383,7 +383,7 @@ footer {
 
 .filter-btn:hover,
 .filter-btn.active {
-    color: var(--dizme-orange);
+    color: var(--nian-orange);
 }
 
 /* Portfolio Grid */
@@ -588,7 +588,7 @@ footer {
 
 .service-section {
     padding: 100px 0;
-    background-color: var(--dizme-dark);
+    background-color: var(--nian-dark);
 }
 
 .service-grid {
@@ -622,7 +622,7 @@ footer {
     right: -30px;
     width: 120px;
     height: 120px;
-    background: var(--dizme-orange);
+    background: var(--nian-orange);
     border-radius: 50%;
     filter: blur(50px);
     opacity: 0;
@@ -682,7 +682,7 @@ footer {
 }
 
 .price span {
-    color: var(--dizme-orange);
+    color: var(--nian-orange);
     font-weight: 700;
     font-size: 1.1rem;
     margin-left: 5px;
@@ -707,7 +707,7 @@ footer {
 
 .testimonials-section {
     padding: 100px 0;
-    background-color: var(--dizme-dark);
+    background-color: var(--nian-dark);
     position: relative;
     overflow: hidden; /* Keeps floating avatars inside */
 }
@@ -728,7 +728,7 @@ footer {
 
 .quote-icon {
     font-size: 60px;
-    color: var(--dizme-orange);
+    color: var(--nian-orange);
     margin-bottom: 30px;
 }
 
@@ -754,7 +754,7 @@ footer {
     height: 60px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid var(--dizme-orange);
+    border: 2px solid var(--nian-orange);
 }
 
 .client-details {
@@ -795,7 +795,7 @@ footer {
 
 /* Active Dot with Ring Effect */
 .dot.active {
-    background-color: var(--dizme-orange);
+    background-color: var(--nian-orange);
     box-shadow: 0 0 0 4px rgba(247, 80, 35, 0.2); /* The ring */
     transform: scale(1.1);
 }
@@ -880,8 +880,8 @@ footer {
 
 /* Hover Effect */
 .arrow:hover {
-    background-color: var(--dizme-orange);
-    border-color: var(--dizme-orange);
+    background-color: var(--nian-orange);
+    border-color: var(--nian-orange);
     color: white;
     transform: scale(1.1);
 }
@@ -910,7 +910,7 @@ footer {
 
 .contact-section {
     padding: 100px 0;
-    background-color: var(--dizme-dark);
+    background-color: var(--nian-dark);
 }
 
 .contact-grid {
@@ -995,7 +995,7 @@ input, textarea {
 }
 
 input:focus, textarea:focus {
-    border-color: var(--dizme-orange);
+    border-color: var(--nian-orange);
 }
 
 input::placeholder, textarea::placeholder {
@@ -1018,7 +1018,7 @@ input::placeholder, textarea::placeholder {
    ========================================= */
 .resume-section {
     padding: 100px 0;
-    background-color: var(--dizme-card); /* Slightly lighter dark */
+    background-color: var(--nian-card); /* Slightly lighter dark */
 }
 
 .resume-grid {
@@ -1030,7 +1030,7 @@ input::placeholder, textarea::placeholder {
 
 .resume-column .resume-title {
     font-size: 1.5rem;
-    color: var(--dizme-orange);
+    color: var(--nian-orange);
     margin-bottom: 30px;
     display: flex;
     align-items: center;
@@ -1057,7 +1057,7 @@ input::placeholder, textarea::placeholder {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: var(--dizme-orange);
+    background-color: var(--nian-orange);
     box-shadow: 0 0 0 5px rgba(247, 80, 35, 0.2);
 }
 
@@ -1104,7 +1104,7 @@ input::placeholder, textarea::placeholder {
 
 .skills-section {
     padding: 100px 0;
-    background-color: var(--dizme-card); /* Darker background to separate sections */
+    background-color: var(--nian-card); /* Darker background to separate sections */
 }
 
 /* Header styling similar to other sections */
@@ -1122,7 +1122,7 @@ input::placeholder, textarea::placeholder {
 
 /* The Card Container */
 .tech-group {
-    background-color: var(--dizme-dark); /* Contrast against section bg */
+    background-color: var(--nian-dark); /* Contrast against section bg */
     padding: 30px;
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -1149,7 +1149,7 @@ input::placeholder, textarea::placeholder {
 }
 
 /* Specific Colors for Headers (Matches your theme) */
-.text-orange { color: var(--dizme-orange); }
+.text-orange { color: var(--nian-orange); }
 .text-green { color: var(--text-green); }
 .text-purple { color: var(--text-purple); }
 
@@ -1185,9 +1185,9 @@ input::placeholder, textarea::placeholder {
 /* Special hover colors based on group parent */
 /* Putem face tag-urile să se aprindă în culoarea grupului la hover */
 .tech-group:hover .group-title.text-orange ~ .tags-container .tech-tag:hover {
-    background-color: var(--dizme-orange);
+    background-color: var(--nian-orange);
     color: white;
-    border-color: var(--dizme-orange);
+    border-color: var(--nian-orange);
 }
 
 .tech-group:hover .group-title.text-green ~ .tags-container .tech-tag:hover {

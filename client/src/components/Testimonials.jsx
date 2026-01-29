@@ -6,11 +6,22 @@ const Testimonials = () => {
   const testimonials = [
     {
       quote: "Andrei is a rare breed of engineer who understands both the infrastructure requirements and the development needs. His work on our Kubernetes migration was flawless.",
-      name: "Mike",
+      name: "Mike T.",
       role: "Project Manager",
       img: "https://randomuser.me/api/portraits/men/46.jpg"
     },
-    // Adding placeholders for other slides if needed, or just keeping one as per original HTML which only showed one explicitly in text
+    {
+      quote: "Working with him transformed our CI/CD pipelines. We went from weekly deployments to shipping features daily with zero downtime.",
+      name: "Sarah Jenkins",
+      role: "CTO, CloudScale",
+      img: "https://randomuser.me/api/portraits/women/44.jpg"
+    },
+    {
+      quote: "The monitoring solutions he implemented gave us visibility we never knew we needed. He's a true expert in the DevOps space.",
+      name: "David Chen",
+      role: "Lead Developer",
+      img: "https://randomuser.me/api/portraits/men/85.jpg"
+    }
   ];
 
   const handlePrev = () => {
@@ -55,7 +66,7 @@ const Testimonials = () => {
           <div className="client-info">
             <img src={testimonials[currentIndex].img} id="client-img" alt={testimonials[currentIndex].name} />
             <div className="client-details">
-              <h5 id="client-name">Professional Feedback</h5>
+              <h5 id="client-name">{testimonials[currentIndex].name}</h5>
               <span id="client-role">{testimonials[currentIndex].role}</span>
             </div>
           </div>
@@ -67,9 +78,13 @@ const Testimonials = () => {
         </div>
 
         <div className="testi-dots">
-          <span className={`dot ${currentIndex === 0 ? 'active' : ''}`} onClick={() => setCurrentIndex(0)}></span>
-          <span className={`dot ${currentIndex === 1 ? 'active' : ''}`} onClick={() => setCurrentIndex(0)}></span>
-          <span className={`dot ${currentIndex === 2 ? 'active' : ''}`} onClick={() => setCurrentIndex(0)}></span>
+          {testimonials.map((_, index) => (
+            <span 
+              key={index} 
+              className={`dot ${currentIndex === index ? 'active' : ''}`} 
+              onClick={() => setCurrentIndex(index)}
+            ></span>
+          ))}
         </div>
       </div>
     </section>

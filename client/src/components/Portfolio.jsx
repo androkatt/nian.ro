@@ -67,60 +67,31 @@ const Portfolio = () => {
   }, [toolCount]);
 
   const projects = [
-    { id: 1, category: 'web', title: 'Nian Tools', type: 'Utility Hub', link: 'https://tools.nian.ro', tall: true, isSpecial: true },
+    { 
+      id: 1, 
+      category: 'web', 
+      title: 'Nian Tools', 
+      type: 'Utility Hub', 
+      link: 'https://tools.nian.ro', 
+      isSpecial: true,
+      bgGradient: 'linear-gradient(to bottom right, #1d4ed8, #4f46e5, #06b6d4)',
+      borderColor: '#333' 
+    },
     {
       id: 2,
       category: 'web',
       title: 'Nian Tasks',
       type: 'Task Management',
       link: 'https://tasks.nian.ro',
-      tall: false,
-      renderLogo: () => (
-        <div style={{
-          width: '100%',
-          height: '100%',
-          background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          position: 'relative',
-          overflow: 'hidden'
-        }}>
-          {/* Background decorative elements */}
-          <div style={{
-            position: 'absolute',
-            width: '150%',
-            height: '150%',
-            background: 'radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(0,0,0,0) 70%)',
-            top: '-25%',
-            left: '-25%'
-          }} />
-
-          {/* App Icon Container */}
-          <div style={{
-            width: '80px',
-            height: '80px',
-            borderRadius: '20px',
-            background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
-            boxShadow: '0 10px 30px -5px rgba(37, 99, 235, 0.5), inset 0 0 0 1px rgba(255,255,255,0.2)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            position: 'relative',
-            zIndex: 2
-          }}>
-            {/* Checkmark Icon */}
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))' }}>
-              <path d="M20 6L9 17L4 12" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
-        </div>
-      )
+      isSpecial: true,
+      isTask: true,
+      bgGradient: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+      borderColor: '#1e293b'
     },
-    { id: 3, category: 'youtube', title: 'Tech Insights', type: 'YouTube Channel', img: 'https://placehold.co/600x800/ef4444/white?text=YouTube+Channel', link: 'https://www.youtube.com/@andreinicolae8305/videos', tall: true },
-    { id: 4, category: 'cloud', title: 'Cloud Infrastructure', type: 'AWS & Kubernetes', img: 'https://placehold.co/600x800/0ea5e9/white?text=Infrastructure', tall: true },
-    { id: 5, category: 'ai', title: 'AI Automation', type: 'Integration', img: 'https://placehold.co/600x400/8b5cf6/white?text=AI+Systems', tall: false },
-    { id: 6, category: 'devops', title: 'DevOps Pipelines', type: 'CI/CD Workflow', img: 'https://placehold.co/600x400/10b981/white?text=DevOps', tall: false },
+    { id: 3, category: 'youtube', title: 'Tech Insights', type: 'YouTube Channel', img: 'https://placehold.co/600x800/ef4444/white?text=YouTube+Channel', link: 'https://www.youtube.com/@andreinicolae8305/videos' },
+    { id: 4, category: 'cloud', title: 'Cloud Infrastructure', type: 'AWS & Kubernetes', img: 'https://placehold.co/600x800/0ea5e9/white?text=Infrastructure' },
+    { id: 5, category: 'ai', title: 'AI Automation', type: 'Integration', img: 'https://placehold.co/600x400/8b5cf6/white?text=AI+Systems' },
+    { id: 6, category: 'devops', title: 'DevOps Pipelines', type: 'CI/CD Workflow', img: 'https://placehold.co/600x400/10b981/white?text=DevOps' },
   ];
 
   const handleFilterChange = (category) => {
@@ -134,7 +105,7 @@ const Portfolio = () => {
           <h4 className="subtitle">Portfolio</h4>
           <h2 className="section-title">My Works</h2>
           <p className="description mx-auto">
-            A collection of projects spanning cloud infrastructure, web development, and AI integration.
+            Selected projects showcasing cloud architecture, full-stack development, and automation.
           </p>
         </div>
 
@@ -150,85 +121,115 @@ const Portfolio = () => {
           ))}
         </div>
 
+        {/* Masonry Grid via CSS Columns */}
         <div className="portfolio-grid">
           {projects.map((project) => (
             <div
               key={project.id}
-              className={`portfolio-item ${project.tall ? 'tall' : ''} ${filter === 'all' || filter === project.category ? 'show' : 'hide'}`}
+              className={`portfolio-item ${filter === 'all' || filter === project.category ? 'show' : 'hide'}`}
+              style={{ display: (filter === 'all' || filter === project.category) ? 'block' : 'none' }}
             >
               {project.isSpecial ? (
                 <div
                   className="item-inner"
                   style={{
-                    height: '100%',
-                    background: 'linear-gradient(to bottom right, #1d4ed8, #4f46e5, #06b6d4)',
+                    minHeight: '420px', // Ensure consistent tall height for special cards
+                    background: project.bgGradient,
+                    border: `1px solid ${project.borderColor}`,
                     color: 'white',
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'center',
                     alignItems: 'center',
-                    padding: '2.5rem',
+                    padding: '3rem 2rem',
                     textAlign: 'center',
-                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
                     position: 'relative',
                     overflow: 'hidden'
                   }}
                 >
-                  <div style={{ position: 'absolute', top: '10%', left: '10%', fontSize: '3rem', opacity: 0.1, fontWeight: 'bold' }}>{"{ }"}</div>
-                  <div style={{ position: 'absolute', bottom: '15%', right: '15%', fontSize: '4rem', opacity: 0.1, fontWeight: 'bold' }}>{"</>"}</div>
-
-                  <h3 style={{
-                    fontSize: '2.2rem',
-                    fontWeight: '800',
-                    marginBottom: '0.5rem',
-                    letterSpacing: '-0.02em'
-                  }}>
-                    NIAN TOOLS
-                  </h3>
-
-                  <div style={{
-                    fontSize: '3.5rem',
-                    fontWeight: '900',
-                    margin: '1rem 0',
-                    textShadow: '0 0 20px rgba(255,255,255,0.3)'
-                  }}>
-                    {displayCount}
+                  {/* Background Decoration */}
+                  <div style={{ position: 'absolute', top: '-10%', left: '-10%', fontSize: '8rem', opacity: 0.1, fontWeight: '800', fontFamily: 'Inter' }}>
+                     {project.isTask ? 'N' : '{}'}
+                  </div>
+                  <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', fontSize: '8rem', opacity: 0.1, fontWeight: '800', fontFamily: 'Inter' }}>
+                     {project.isTask ? '</>' : '</>'}
                   </div>
 
-                  <p style={{
-                    fontSize: '1.1rem',
-                    marginBottom: '2rem',
-                    maxWidth: '280px',
-                    lineHeight: '1.4',
-                    opacity: 0.9
-                  }}>
-                    Free developer tools, converters, and utilities built for efficiency.
-                  </p>
+                  {/* Top Content Group */}
+                  <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <h3 style={{
+                      fontSize: '1.8rem',
+                      fontWeight: '800',
+                      letterSpacing: '-0.02em',
+                      marginBottom: '0.5rem',
+                      color: '#fff'
+                    }}>
+                      {project.isTask ? 'NIAN' : 'NIAN TOOLS'}
+                    </h3>
 
+                    {project.isTask ? (
+                      <div style={{
+                        fontSize: '2.5rem',
+                        fontWeight: '900',
+                        margin: '0.5rem 0 1.5rem 0',
+                        lineHeight: '1',
+                        color: '#fff',
+                        textShadow: '0 0 20px rgba(255,255,255,0.4)'
+                      }}>
+                        TASK MANAGER
+                      </div>
+                    ) : (
+                      <div style={{
+                        fontSize: '4rem',
+                        fontWeight: '800',
+                        margin: '0 0 1rem 0',
+                        lineHeight: '1',
+                        color: '#fff',
+                        textShadow: '0 0 20px rgba(255,255,255,0.4)'
+                      }}>
+                        {displayCount}
+                      </div>
+                    )}
+
+                    <p style={{
+                      fontSize: '1.1rem',
+                      color: 'rgba(255,255,255,0.9)',
+                      marginBottom: '2rem',
+                      maxWidth: '260px',
+                      lineHeight: '1.5'
+                    }}>
+                      {project.isTask 
+                        ? 'Streamline your workflow with intelligent task tracking.' 
+                        : 'Free developer tools, converters, and utilities built for efficiency.'}
+                    </p>
+                  </div>
+
+                  {/* Bottom Button Group - Margin Top Auto pushes it down */}
                   <a
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
-                      backgroundColor: 'white',
-                      color: '#1d4ed8',
+                      marginTop: 'auto', // The Alignment Fix
+                      backgroundColor: '#fff',
+                      color: project.isTask ? '#2563eb' : '#1d4ed8',
                       border: 'none',
-                      fontWeight: '800',
+                      fontWeight: '700',
                       padding: '14px 35px',
                       borderRadius: '50px',
                       cursor: 'pointer',
                       textDecoration: 'none',
                       transition: 'all 0.3s ease',
+                      fontSize: '1rem',
                       display: 'inline-block',
-                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.2)'
+                      boxShadow: '0 10px 20px rgba(0,0,0,0.2)'
                     }}
                     onMouseOver={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-3px) scale(1.05)';
-                      e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.3)';
+                      e.currentTarget.style.transform = 'translateY(-3px)';
+                      e.currentTarget.style.boxShadow = '0 15px 25px rgba(0,0,0,0.3)';
                     }}
                     onMouseOut={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                      e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.2)';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 10px 20px rgba(0,0,0,0.2)';
                     }}
                   >
                     Discover more
@@ -236,11 +237,7 @@ const Portfolio = () => {
                 </div>
               ) : (
                 <a href={project.link || "#"} target={project.link ? "_blank" : "_self"} rel="noopener noreferrer" className="item-inner">
-                  {project.renderLogo ? (
-                    project.renderLogo()
-                  ) : (
-                    <img src={project.img} alt={project.title} />
-                  )}
+                  <img src={project.img} alt={project.title} style={{ borderRadius: '12px' }} />
                   <div className="portfolio-info">
                     <h4>{project.title}</h4>
                     <span>{project.type}</span>

@@ -274,10 +274,6 @@ const Hero = () => {
           </Canvas>
         </div>
       </div>
-
-      <a href="#about" className="mouse-icon" aria-label="Scroll Down">
-        <div className="wheel"></div>
-      </a>
     </section>
   );
 };
