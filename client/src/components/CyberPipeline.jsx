@@ -322,7 +322,7 @@ const CyberPipeline = () => {
               </g>
 
               {/* Icon */}
-              <foreignObject x="-30" y="-30" width="60" height="60" style={{ pointerEvents: 'none' }}>
+              <foreignObject x="-30" y="-20" width="60" height="60" style={{ pointerEvents: 'none' }}>
                 <div
                   className="w-full h-full flex items-center justify-center"
                   style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
