@@ -130,7 +130,10 @@ const Portfolio = () => {
               style={{ display: (filter === 'all' || filter === project.category) ? 'block' : 'none' }}
             >
               {project.isSpecial ? (
-                <div
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="item-inner"
                   style={{
                     minHeight: '420px', // Ensure consistent tall height for special cards
@@ -143,14 +146,15 @@ const Portfolio = () => {
                     padding: '3rem 2rem',
                     textAlign: 'center',
                     position: 'relative',
-                    overflow: 'hidden'
+                    overflow: 'hidden',
+                    textDecoration: 'none'
                   }}
                 >
                   {/* Background Decoration */}
-                  <div style={{ position: 'absolute', top: '-10%', left: '-10%', fontSize: '8rem', opacity: 0.1, fontWeight: '800', fontFamily: 'Inter' }}>
+                  <div style={{ pointerEvents: 'none', position: 'absolute', top: '-10%', left: '-10%', fontSize: '8rem', opacity: 0.1, fontWeight: '800', fontFamily: 'Inter' }}>
                      {project.isTask ? 'N' : '{}'}
                   </div>
-                  <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', fontSize: '8rem', opacity: 0.1, fontWeight: '800', fontFamily: 'Inter' }}>
+                  <div style={{ pointerEvents: 'none', position: 'absolute', bottom: '-10%', right: '-10%', fontSize: '8rem', opacity: 0.1, fontWeight: '800', fontFamily: 'Inter' }}>
                      {project.isTask ? '</>' : '</>'}
                   </div>
 
@@ -204,10 +208,7 @@ const Portfolio = () => {
                   </div>
 
                   {/* Bottom Button Group - Margin Top Auto pushes it down */}
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <div
                     style={{
                       marginTop: 'auto', // The Alignment Fix
                       backgroundColor: '#fff',
@@ -221,7 +222,9 @@ const Portfolio = () => {
                       transition: 'all 0.3s ease',
                       fontSize: '1rem',
                       display: 'inline-block',
-                      boxShadow: '0 10px 20px rgba(0,0,0,0.2)'
+                      boxShadow: '0 10px 20px rgba(0,0,0,0.2)',
+                      position: 'relative',
+                      zIndex: 2
                     }}
                     onMouseOver={(e) => {
                       e.currentTarget.style.transform = 'translateY(-3px)';
@@ -233,8 +236,8 @@ const Portfolio = () => {
                     }}
                   >
                     Discover more
-                  </a>
-                </div>
+                  </div>
+                </a>
               ) : (
                 <a href={project.link || "#"} target={project.link ? "_blank" : "_self"} rel="noopener noreferrer" className="item-inner">
                   <img src={project.img} alt={project.title} style={{ borderRadius: '12px' }} />
