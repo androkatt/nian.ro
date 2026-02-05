@@ -31,6 +31,16 @@ const transporter = nodemailer.createTransport({
 
 // --- ROUTES ---
 
+// Serve ads.txt explicitly
+app.get('/ads.txt', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'ads.txt'));
+});
+
+// Serve robots.txt explicitly
+app.get('/robots.txt', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'robots.txt'));
+});
+
 // app.post('/api/send-email'...) -> RĂMÂNE LA FEL (Nu îl mai copiez ca să nu ocup spațiu, e perfect)
 app.post('/api/send-email', async (req, res) => {
     const { name, email, phone, subject, message } = req.body;
