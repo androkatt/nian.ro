@@ -198,6 +198,45 @@ const Portfolio = () => {
                         </h3>
                       )}
 
+                      {project.id === 4 && (
+                        <h3 style={{
+                          fontSize: '1.8rem',
+                          fontWeight: '800',
+                          letterSpacing: '-0.02em',
+                          marginBottom: '0.5rem',
+                          color: '#fff',
+                          textShadow: '0 2px 10px rgba(0,0,0,0.8)'
+                        }}>
+                          Infrastructure projects
+                        </h3>
+                      )}
+
+                      {project.id === 5 && (
+                        <h3 style={{
+                          fontSize: '1.8rem',
+                          fontWeight: '800',
+                          letterSpacing: '-0.02em',
+                          marginBottom: '0.5rem',
+                          color: '#fff',
+                          textShadow: '0 2px 10px rgba(0,0,0,0.8)'
+                        }}>
+                          AI Projects
+                        </h3>
+                      )}
+
+                      {project.id === 6 && (
+                        <h3 style={{
+                          fontSize: '1.8rem',
+                          fontWeight: '800',
+                          letterSpacing: '-0.02em',
+                          marginBottom: '0.5rem',
+                          color: '#fff',
+                          textShadow: '0 2px 10px rgba(0,0,0,0.8)'
+                        }}>
+                          DEVOPS projects
+                        </h3>
+                      )}
+
                       {project.isSpecial && (
                         <>
                           <h3 style={{
