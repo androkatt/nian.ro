@@ -21,9 +21,9 @@ const Navbar = () => {
           <a href="#contact" onClick={() => setMobileMenuOpen(false)}>Contact</a>
         </div>
 
-        <div className="nav-btn">
+        {/* <div className="nav-btn">
           <a href="/cv.pdf" className="btn-download" download aria-label="Download CV PDF">Download CV</a>
-        </div>
+        </div> */}
 
         <div className="mobile-toggle" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
           <i className="fa-solid fa-bars"></i>
