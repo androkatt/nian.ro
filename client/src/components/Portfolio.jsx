@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import youtubeImg from '../img/youtube.jpg';
 import aiImg from '../img/AI_SYSTEM.jpg';
 import infraImg from '../img/infra.jpeg';
@@ -71,15 +72,15 @@ const Portfolio = () => {
   }, [toolCount]);
 
   const projects = [
-    { 
-      id: 1, 
-      category: 'web', 
-      title: 'Nian Tools', 
-      type: 'Utility Hub', 
-      link: 'https://tools.nian.ro', 
+    {
+      id: 1,
+      category: 'web',
+      title: 'Nian Tools',
+      type: 'Utility Hub',
+      link: 'https://tools.nian.ro',
       isSpecial: true,
       bgGradient: 'linear-gradient(to bottom right, #1d4ed8, #4f46e5, #06b6d4)',
-      borderColor: '#333' 
+      borderColor: '#333'
     },
     {
       id: 2,
@@ -105,13 +106,19 @@ const Portfolio = () => {
   return (
     <section id="portfolio" className="portfolio-section">
       <div className="container">
-        <div className="section-header text-center">
+        <motion.div
+          className="section-header text-center"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+        >
           <h4 className="subtitle">Portfolio</h4>
           <h2 className="section-title">My Works</h2>
           <p className="description mx-auto">
             Selected projects showcasing cloud architecture, full-stack development, and automation.
           </p>
-        </div>
+        </motion.div>
 
         <div className="portfolio-filter">
           {['all', 'web', 'youtube', 'cloud', 'ai', 'devops'].map((cat) => (
@@ -125,228 +132,240 @@ const Portfolio = () => {
           ))}
         </div>
 
-        <div className="portfolio-grid">
-          {projects.map((project) => {
-            const isComingSoon = [4, 5, 6].includes(project.id);
-            const isClickable = (project.isSpecial || project.id === 3) && !isComingSoon;
-            const Wrapper = isClickable ? 'a' : 'div';
+        <motion.div
+          className="portfolio-grid"
+          layout
+        >
+          <AnimatePresence mode="popLayout">
+            {projects.map((project) => {
+              const isComingSoon = [4, 5, 6].includes(project.id);
+              const isClickable = (project.isSpecial || project.id === 3) && !isComingSoon;
+              const Wrapper = isClickable ? 'a' : 'div';
 
-            return (
-              <div
-                key={project.id}
-                className={`portfolio-item ${filter === 'all' || filter === project.category ? 'show' : 'hide'}`}
-                style={{ display: (filter === 'all' || filter === project.category) ? 'block' : 'none' }}
-              >
-                {project.isSpecial || project.id === 3 || isComingSoon ? (
-                  <Wrapper
-                    href={isClickable ? project.link : undefined}
-                    target={isClickable ? "_blank" : undefined}
-                    rel={isClickable ? "noopener noreferrer" : undefined}
-                    className="item-inner"
-                    style={{
-                      minHeight: '420px',
-                      background: project.isSpecial ? project.bgGradient : `url(${project.img})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                      border: `1px solid ${project.borderColor || 'rgba(255,255,255,0.1)'}`,
-                      color: 'white',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      padding: '3rem 2rem',
-                      textAlign: 'center',
-                      position: 'relative',
-                      overflow: 'hidden',
-                      textDecoration: 'none',
-                      cursor: isClickable ? 'pointer' : 'default'
-                    }}
-                  >
-                    {/* Dark Overlay for Coming Soon */}
-                    {isComingSoon && (
-                      <div style={{
-                        position: 'absolute',
-                        top: 0, left: 0, right: 0, bottom: 0,
-                        backgroundColor: 'rgba(0,0,0,0.20)',
-                        zIndex: 1
-                      }} />
-                    )}
+              // Only render items that match the filter.
+              if (filter !== 'all' && filter !== project.category) return null;
 
-                    {project.isSpecial && (
-                      <>
-                        {/* Background Decoration */}
-                        <div style={{ pointerEvents: 'none', position: 'absolute', top: '-10%', left: '-10%', fontSize: '8rem', opacity: 0.1, fontWeight: '800', fontFamily: 'Inter' }}>
-                          {project.isTask ? 'N' : '{}'}
-                        </div>
-                        <div style={{ pointerEvents: 'none', position: 'absolute', bottom: '-10%', right: '-10%', fontSize: '8rem', opacity: 0.1, fontWeight: '800', fontFamily: 'Inter' }}>
-                          {project.isTask ? '</>' : '</>'}
-                        </div>
-                      </>
-                    )}
-
-                    {/* Top Content Group */}
-                    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', zIndex: 2 }}>
-                      {project.id === 3 && (
-                        <h3 style={{
-                          fontSize: '1.8rem',
-                          fontWeight: '800',
-                          letterSpacing: '-0.02em',
-                          marginBottom: '0.5rem',
-                          color: '#fff',
-                          textShadow: '0 2px 10px rgba(0,0,0,0.8)'
-                        }}>
-                          Video Portofolio
-                        </h3>
-                      )}
-
-                      {project.id === 4 && (
-                        <h3 style={{
-                          fontSize: '1.8rem',
-                          fontWeight: '800',
-                          letterSpacing: '-0.02em',
-                          marginBottom: '0.5rem',
-                          color: '#fff',
-                          textShadow: '0 2px 10px rgba(0,0,0,0.8)'
-                        }}>
-                          Infrastructure projects
-                        </h3>
-                      )}
-
-                      {project.id === 5 && (
-                        <h3 style={{
-                          fontSize: '1.8rem',
-                          fontWeight: '800',
-                          letterSpacing: '-0.02em',
-                          marginBottom: '0.5rem',
-                          color: '#fff',
-                          textShadow: '0 2px 10px rgba(0,0,0,0.8)'
-                        }}>
-                          AI Projects
-                        </h3>
-                      )}
-
-                      {project.id === 6 && (
-                        <h3 style={{
-                          fontSize: '1.8rem',
-                          fontWeight: '800',
-                          letterSpacing: '-0.02em',
-                          marginBottom: '0.5rem',
-                          color: '#fff',
-                          textShadow: '0 2px 10px rgba(0,0,0,0.8)'
-                        }}>
-                          DEVOPS projects
-                        </h3>
+              return (
+                <motion.div
+                  key={project.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.5, type: 'spring' }}
+                  className="portfolio-item"
+                >
+                  {project.isSpecial || project.id === 3 || isComingSoon ? (
+                    <Wrapper
+                      href={isClickable ? project.link : undefined}
+                      target={isClickable ? "_blank" : undefined}
+                      rel={isClickable ? "noopener noreferrer" : undefined}
+                      className="item-inner"
+                      style={{
+                        minHeight: '420px',
+                        background: project.isSpecial ? project.bgGradient : `url(${project.img})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        border: `1px solid ${project.borderColor || 'rgba(255,255,255,0.1)'}`,
+                        color: 'white',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        padding: '3rem 2rem',
+                        textAlign: 'center',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        textDecoration: 'none',
+                        cursor: isClickable ? 'pointer' : 'default'
+                      }}
+                    >
+                      {/* Dark Overlay for Coming Soon */}
+                      {isComingSoon && (
+                        <div style={{
+                          position: 'absolute',
+                          top: 0, left: 0, right: 0, bottom: 0,
+                          backgroundColor: 'rgba(0,0,0,0.20)',
+                          zIndex: 1
+                        }} />
                       )}
 
                       {project.isSpecial && (
                         <>
+                          {/* Background Decoration */}
+                          <div style={{ pointerEvents: 'none', position: 'absolute', top: '-10%', left: '-10%', fontSize: '8rem', opacity: 0.1, fontWeight: '800', fontFamily: 'Inter' }}>
+                            {project.isTask ? 'N' : '{}'}
+                          </div>
+                          <div style={{ pointerEvents: 'none', position: 'absolute', bottom: '-10%', right: '-10%', fontSize: '8rem', opacity: 0.1, fontWeight: '800', fontFamily: 'Inter' }}>
+                            {project.isTask ? '</>' : '</>'}
+                          </div>
+                        </>
+                      )}
+
+                      {/* Top Content Group */}
+                      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', zIndex: 2 }}>
+                        {project.id === 3 && (
                           <h3 style={{
                             fontSize: '1.8rem',
                             fontWeight: '800',
                             letterSpacing: '-0.02em',
                             marginBottom: '0.5rem',
-                            color: '#fff'
+                            color: '#fff',
+                            textShadow: '0 2px 10px rgba(0,0,0,0.8)'
                           }}>
-                            {project.isTask ? '' : 'Various Tools'}
+                            Video Portofolio
                           </h3>
+                        )}
 
-                          {project.isTask ? (
-                            <div style={{
-                              fontSize: '2.5rem',
-                              fontWeight: '900',
-                              margin: '0.5rem 0 1.5rem 0',
-                              lineHeight: '1',
-                              color: '#fff',
-                              textShadow: '0 0 20px rgba(255,255,255,0.4)'
-                            }}>
-                              TASK MANAGER
-                            </div>
-                          ) : (
-                            <div style={{
-                              fontSize: '4rem',
-                              fontWeight: '800',
-                              margin: '0 0 1rem 0',
-                              lineHeight: '1',
-                              color: '#fff',
-                              textShadow: '0 0 20px rgba(255,255,255,0.4)'
-                            }}>
-                              {displayCount}
-                            </div>
-                          )}
-
-                          <p style={{
-                            fontSize: '1.1rem',
-                            color: 'rgba(255,255,255,0.9)',
-                            marginBottom: '2rem',
-                            maxWidth: '260px',
-                            lineHeight: '1.5'
+                        {project.id === 4 && (
+                          <h3 style={{
+                            fontSize: '1.8rem',
+                            fontWeight: '800',
+                            letterSpacing: '-0.02em',
+                            marginBottom: '0.5rem',
+                            color: '#fff',
+                            textShadow: '0 2px 10px rgba(0,0,0,0.8)'
                           }}>
-                            {project.isTask 
-                              ? 'Streamline your workflow with intelligent task tracking.' 
-                              : 'Free developer tools, converters, and utilities built for efficiency.'}
-                          </p>
-                        </>
-                      )}
-                    </div>
+                            Infrastructure projects
+                          </h3>
+                        )}
 
-                    {/* Bottom Button Group - Margin Top Auto pushes it down */}
-                    <div
-                      style={{
-                        marginTop: 'auto',
-                        backgroundColor: isComingSoon ? '#666' : '#fff',
-                        color: isComingSoon ? '#fff' : (project.isTask ? '#2563eb' : (project.id === 3 ? '#ef4444' : (project.id === 4 ? '#0ea5e9' : (project.id === 5 ? '#8b5cf6' : (project.id === 6 ? '#10b981' : '#1d4ed8'))))),
-                        border: 'none',
-                        fontWeight: '700',
-                        padding: '14px 35px',
-                        borderRadius: '50px',
-                        cursor: isClickable ? 'pointer' : 'default',
-                        textDecoration: 'none',
-                        transition: 'all 0.3s ease',
-                        fontSize: '1rem',
-                        display: 'inline-block',
-                        boxShadow: '0 10px 20px rgba(0,0,0,0.2)',
-                        position: 'relative',
-                        zIndex: 2,
-                        opacity: isComingSoon ? 0.9 : 1
-                      }}
-                      onMouseOver={(e) => {
-                        if (isClickable) {
-                          e.currentTarget.style.transform = 'translateY(-3px)';
-                          e.currentTarget.style.boxShadow = '0 15px 25px rgba(0,0,0,0.3)';
-                        }
-                      }}
-                      onMouseOut={(e) => {
-                        if (isClickable) {
-                          e.currentTarget.style.transform = 'translateY(0)';
-                          e.currentTarget.style.boxShadow = '0 10px 20px rgba(0,0,0,0.2)';
-                        }
-                      }}
-                    >
-                      {isComingSoon ? 'Coming soon' : 'Discover more'}
-                    </div>
-                  </Wrapper>
-                ) : (
-                  <a href={project.link || "#"} target={project.link ? "_blank" : "_self"} rel="noopener noreferrer" className="item-inner">
-                    <img 
-                      src={project.img} 
-                      alt={project.title} 
-                      style={{ 
-                        borderRadius: '12px',
-                        width: '100%',
-                        height: '420px',
-                        objectFit: 'cover',
-                        display: 'block'
-                      }} 
-                    />
-                    <div className="portfolio-info">
-                      <h4>{project.title}</h4>
-                      <span>{project.type}</span>
-                    </div>
-                  </a>
-                )}
-              </div>
-            );
-          })}
-        </div>
+                        {project.id === 5 && (
+                          <h3 style={{
+                            fontSize: '1.8rem',
+                            fontWeight: '800',
+                            letterSpacing: '-0.02em',
+                            marginBottom: '0.5rem',
+                            color: '#fff',
+                            textShadow: '0 2px 10px rgba(0,0,0,0.8)'
+                          }}>
+                            AI Projects
+                          </h3>
+                        )}
+
+                        {project.id === 6 && (
+                          <h3 style={{
+                            fontSize: '1.8rem',
+                            fontWeight: '800',
+                            letterSpacing: '-0.02em',
+                            marginBottom: '0.5rem',
+                            color: '#fff',
+                            textShadow: '0 2px 10px rgba(0,0,0,0.8)'
+                          }}>
+                            DEVOPS projects
+                          </h3>
+                        )}
+
+                        {project.isSpecial && (
+                          <>
+                            <h3 style={{
+                              fontSize: '1.8rem',
+                              fontWeight: '800',
+                              letterSpacing: '-0.02em',
+                              marginBottom: '0.5rem',
+                              color: '#fff'
+                            }}>
+                              {project.isTask ? '' : 'Various Tools'}
+                            </h3>
+
+                            {project.isTask ? (
+                              <div style={{
+                                fontSize: '2.5rem',
+                                fontWeight: '900',
+                                margin: '0.5rem 0 1.5rem 0',
+                                lineHeight: '1',
+                                color: '#fff',
+                                textShadow: '0 0 20px rgba(255,255,255,0.4)'
+                              }}>
+                                TASK MANAGER
+                              </div>
+                            ) : (
+                              <div style={{
+                                fontSize: '4rem',
+                                fontWeight: '800',
+                                margin: '0 0 1rem 0',
+                                lineHeight: '1',
+                                color: '#fff',
+                                textShadow: '0 0 20px rgba(255,255,255,0.4)'
+                              }}>
+                                {displayCount}
+                              </div>
+                            )}
+
+                            <p style={{
+                              fontSize: '1.1rem',
+                              color: 'rgba(255,255,255,0.9)',
+                              marginBottom: '2rem',
+                              maxWidth: '260px',
+                              lineHeight: '1.5'
+                            }}>
+                              {project.isTask
+                                ? 'Streamline your workflow with intelligent task tracking.'
+                                : 'Free developer tools, converters, and utilities built for efficiency.'}
+                            </p>
+                          </>
+                        )}
+                      </div>
+
+                      {/* Bottom Button Group - Margin Top Auto pushes it down */}
+                      <div
+                        style={{
+                          marginTop: 'auto',
+                          backgroundColor: isComingSoon ? '#666' : '#fff',
+                          color: isComingSoon ? '#fff' : (project.isTask ? '#2563eb' : (project.id === 3 ? '#ef4444' : (project.id === 4 ? '#0ea5e9' : (project.id === 5 ? '#8b5cf6' : (project.id === 6 ? '#10b981' : '#1d4ed8'))))),
+                          border: 'none',
+                          fontWeight: '700',
+                          padding: '14px 35px',
+                          borderRadius: '50px',
+                          cursor: isClickable ? 'pointer' : 'default',
+                          textDecoration: 'none',
+                          transition: 'all 0.3s ease',
+                          fontSize: '1rem',
+                          display: 'inline-block',
+                          boxShadow: '0 10px 20px rgba(0,0,0,0.2)',
+                          position: 'relative',
+                          zIndex: 2,
+                          opacity: isComingSoon ? 0.9 : 1
+                        }}
+                        onMouseOver={(e) => {
+                          if (isClickable) {
+                            e.currentTarget.style.transform = 'translateY(-3px)';
+                            e.currentTarget.style.boxShadow = '0 15px 25px rgba(0,0,0,0.3)';
+                          }
+                        }}
+                        onMouseOut={(e) => {
+                          if (isClickable) {
+                            e.currentTarget.style.transform = 'translateY(0)';
+                            e.currentTarget.style.boxShadow = '0 10px 20px rgba(0,0,0,0.2)';
+                          }
+                        }}
+                      >
+                        {isComingSoon ? 'Coming soon' : 'Discover more'}
+                      </div>
+                    </Wrapper>
+                  ) : (
+                    <a href={project.link || "#"} target={project.link ? "_blank" : "_self"} rel="noopener noreferrer" className="item-inner">
+                      <img
+                        src={project.img}
+                        alt={project.title}
+                        style={{
+                          borderRadius: '12px',
+                          width: '100%',
+                          height: '420px',
+                          objectFit: 'cover',
+                          display: 'block'
+                        }}
+                      />
+                      <div className="portfolio-info">
+                        <h4>{project.title}</h4>
+                        <span>{project.type}</span>
+                      </div>
+                    </a>
+                  )}
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </section>
   );

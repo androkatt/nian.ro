@@ -1,4 +1,5 @@
 import React, { useMemo, useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
 import * as THREE from 'three';
@@ -38,12 +39,12 @@ const SkillNode = ({ position, tech }) => {
   // Actually, simpleicons.org allows coloring. Let's try one more fallback logic:
   // 1. Try simpleicons.org (colored)
   // 2. Fallback to text
-  
+
   // Since user reported 404s specifically on cdn.simpleicons.org for these slugs,
   // let's try a direct SVG fetch logic or just robustly handle the error.
-  
+
   const iconUrl = `https://cdn.simpleicons.org/${tech.slug}/${tech.color}`;
-  
+
   return (
     <group position={position}>
       <Html transform sprite distancelimit={20}>
@@ -74,22 +75,22 @@ const SkillNode = ({ position, tech }) => {
             boxShadow: hovered ? `0 0 15px #${tech.color}` : 'none'
           }}>
             {!imgError ? (
-              <img 
-                src={iconUrl} 
+              <img
+                src={iconUrl}
                 alt={tech.name}
                 style={{ width: '32px', height: '32px' }}
                 onError={(e) => {
                   // Final safety net: if CDN fails, show text.
                   // This prevents the "broken image" icon.
                   setImgError(true);
-                  e.target.style.display = 'none'; 
+                  e.target.style.display = 'none';
                 }}
               />
             ) : (
-              <span style={{ 
-                color: '#' + tech.color, 
-                fontWeight: 'bold', 
-                fontSize: '18px' 
+              <span style={{
+                color: '#' + tech.color,
+                fontWeight: 'bold',
+                fontSize: '18px'
               }}>
                 {tech.name.substring(0, 2)}
               </span>
@@ -118,7 +119,7 @@ const Pipe = ({ start, end }) => {
   const endVec = new THREE.Vector3(...end);
   const direction = new THREE.Vector3().subVectors(endVec, startVec);
   const length = direction.length();
-  
+
   const position = new THREE.Vector3().addVectors(startVec, endVec).multiplyScalar(0.5);
   const quaternion = new THREE.Quaternion();
   quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.normalize());
@@ -173,7 +174,7 @@ const Connections = ({ nodes }) => {
     specificPairs.forEach(([name1, name2]) => {
       const n1 = nodes.find(n => n.tech.name === name1);
       const n2 = nodes.find(n => n.tech.name === name2);
-      
+
       if (n1 && n2) {
         const idx1 = nodes.indexOf(n1);
         const idx2 = nodes.indexOf(n2);
@@ -242,30 +243,41 @@ const Hero = () => {
   return (
     <section id="home" className="hero-section">
       <div className="container hero-grid">
-        <div className="hero-content">
-          <h3 className="hello-text">Hello, I'm</h3>
-          <h1 className="hero-name">Nicolae Andrei</h1>
-          <h4 className="hero-tagline">
+        <motion.div
+          className="hero-content"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.15, delayChildren: 0.2 }
+            }
+          }}
+        >
+          <motion.h3 className="hello-text" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>Hello, I'm</motion.h3>
+          <motion.h1 className="hero-name" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>Nicolae Andrei</motion.h1>
+          <motion.h4 className="hero-tagline" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
             Cloud <span className="text-green">Infrastructure Architect</span> & <span className="text-purple">DevOps Engineer</span>
-          </h4>
-          <p className="description">
+          </motion.h4>
+          <motion.p className="description" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
             I architect scalable cloud environments and automate complex workflows. With over a decade of experience, I merge software development with robust infrastructure using <strong>AWS, Kubernetes, and AI</strong> technologies.
-          </p>
-          <div className="hero-buttons">
+          </motion.p>
+          <motion.div className="hero-buttons" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
             <a href="#contact" className="btn">Get in Touch</a>
             <div className="social-icons">
               <a href="https://www.linkedin.com/in/nicolae-andrei/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i className="fa-brands fa-linkedin-in"></i></a>
               <a href="https://github.com/androkatt" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i className="fa-brands fa-github"></i></a>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Width 600px, Hidden on mobile */}
         <div className="hero-image-wrapper hidden-mobile" style={{ height: '600px', width: '600px', position: 'relative', zIndex: 1 }}>
           <Canvas camera={{ position: [0, 0, 22], fov: 50 }}>
-            <OrbitControls 
-              enableZoom={false} 
-              autoRotate={true} 
+            <OrbitControls
+              enableZoom={false}
+              autoRotate={true}
               autoRotateSpeed={0.8}
               enableDamping={true}
             />

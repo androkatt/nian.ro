@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -45,17 +46,35 @@ const Contact = () => {
   return (
     <section id="contact" className="contact-section">
       <div className="container">
-        <div className="section-header text-center">
+        <motion.div
+          className="section-header text-center"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+        >
           <h4 className="subtitle">Contact Me</h4>
           <h2 className="section-title">Let's Collaborate</h2>
           <p className="description mx-auto">
             Open to discussing DevOps consultancy, cloud migration projects, or full-stack development.
           </p>
-        </div>
+        </motion.div>
 
         <div className="contact-grid">
-          <div className="contact-info">
-            <div className="info-item">
+          <motion.div
+            className="contact-info"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.2 }
+              }
+            }}
+          >
+            <motion.div className="info-item" variants={{ hidden: { opacity: 0, x: -30 }, visible: { opacity: 1, x: 0 } }}>
               <div className="icon-circle bg-mint">
                 <i className="fa-solid fa-envelope text-green"></i>
               </div>
@@ -63,9 +82,9 @@ const Contact = () => {
                 <h5>Email</h5>
                 <p>andrei@nian.ro</p>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="info-item">
+            <motion.div className="info-item" variants={{ hidden: { opacity: 0, x: -30 }, visible: { opacity: 1, x: 0 } }}>
               <div className="icon-circle bg-lavender">
                 <i className="fa-solid fa-phone text-purple"></i>
               </div>
@@ -73,61 +92,67 @@ const Contact = () => {
                 <h5>Phone</h5>
                 <p>+40 764 673 211</p>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          <div className="contact-form-wrapper">
+          <motion.div
+            className="contact-form-wrapper"
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
             <form onSubmit={handleSubmit}>
               <div className="form-row">
-                <input 
-                  type="text" 
-                  name="name" 
-                  placeholder="Your Name" 
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
                   value={formData.name}
                   onChange={handleChange}
-                  required 
+                  required
                 />
-                <input 
-                  type="email" 
-                  name="email" 
-                  placeholder="Your Email" 
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
                   value={formData.email}
                   onChange={handleChange}
-                  required 
+                  required
                 />
               </div>
               <div className="form-row">
-                <input 
-                  type="text" 
-                  name="phone" 
-                  placeholder="Your Phone (Optional)" 
+                <input
+                  type="text"
+                  name="phone"
+                  placeholder="Your Phone (Optional)"
                   value={formData.phone}
                   onChange={handleChange}
                 />
-                <input 
-                  type="text" 
-                  name="subject" 
-                  placeholder="Subject" 
+                <input
+                  type="text"
+                  name="subject"
+                  placeholder="Subject"
                   value={formData.subject}
                   onChange={handleChange}
                 />
               </div>
-              <textarea 
-                name="message" 
-                rows="6" 
-                placeholder="How can I help you?" 
+              <textarea
+                name="message"
+                rows="6"
+                placeholder="How can I help you?"
                 value={formData.message}
                 onChange={handleChange}
                 required
               ></textarea>
-              
+
               <button type="submit" className="btn" disabled={status === 'sending'}>
                 {status === 'sending' ? 'Sending...' : 'Send Message'}
               </button>
-              {status === 'success' && <p className="text-green" style={{marginTop: '10px'}}>Message sent successfully!</p>}
-              {status === 'error' && <p className="text-orange" style={{marginTop: '10px'}}>Failed to send message. Please try again.</p>}
+              {status === 'success' && <p className="text-green" style={{ marginTop: '10px' }}>Message sent successfully!</p>}
+              {status === 'error' && <p className="text-orange" style={{ marginTop: '10px' }}>Failed to send message. Please try again.</p>}
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
