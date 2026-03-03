@@ -260,63 +260,28 @@ const Hero = () => {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, y: -50 }}
             transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100vh',
-              background: 'var(--ertqa-dark)',
-              zIndex: 9999,
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              pointerEvents: 'none'
-            }}
           >
             <motion.div
+              className="loader-title"
               initial={{ scale: 0.9, opacity: 0, filter: 'blur(10px)' }}
               animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
               transition={{ duration: 1, ease: 'easeOut' }}
-              style={{
-                fontSize: '8rem',
-                fontWeight: '900',
-                letterSpacing: '0.3em',
-                color: 'white',
-                textTransform: 'uppercase',
-                lineHeight: 1
-              }}
             >
               NIAN
             </motion.div>
             <motion.div
+              className="loader-subtitle"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              style={{
-                marginTop: '1.5rem',
-                fontSize: '1.6rem',
-                color: '#d4af37',
-                letterSpacing: '0.4em',
-                textTransform: 'uppercase',
-                fontWeight: '300'
-              }}
             >
               Personal Portfolio
             </motion.div>
             <motion.div
+              className="loader-name"
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.5 }}
               transition={{ delay: 0.8, duration: 1 }}
-              style={{
-                marginTop: '0.8rem',
-                fontSize: '0.9rem',
-                color: 'rgba(255,255,255,0.5)',
-                letterSpacing: '0.5em',
-                textTransform: 'uppercase',
-                fontWeight: '300'
-              }}
             >
               Nicolae Andrei-Gabriel
             </motion.div>
@@ -342,7 +307,6 @@ const Hero = () => {
             <motion.h1
               className="hero-name"
               variants={{ hidden: { opacity: 0, y: 20, filter: 'blur(10px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 1, ease: [0.2, 0.65, 0.3, 0.9] } } }}
-              style={{ fontSize: '5rem', fontWeight: '800', letterSpacing: '-0.03em', marginBottom: '1rem' }}
             >
               Nicolae Andrei
             </motion.h1>

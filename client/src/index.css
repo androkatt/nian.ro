@@ -1547,8 +1547,55 @@ textarea::placeholder {
 }
 
 /* =========================================
+   INITIAL LOADER
+   ========================================= */
+.initial-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--ertqa-dark);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+.loader-title {
+    font-size: 8rem;
+    font-weight: 900;
+    letter-spacing: 0.3em;
+    color: white;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+.loader-subtitle {
+    margin-top: 1.5rem;
+    font-size: 1.6rem;
+    color: #d4af37;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.loader-name {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+/* =========================================
    8. RESPONSIVE (MOBILE & TABLET)
    ========================================= */
+
+/* ---- Small Desktop / Tablet Landscape ---- */
 @media (max-width: 992px) {
 
     /* Nav */
@@ -1561,11 +1608,27 @@ textarea::placeholder {
         display: block;
     }
 
+    /* Loader */
+    .loader-title {
+        font-size: 5rem;
+        letter-spacing: 0.2em;
+    }
+
+    .loader-subtitle {
+        font-size: 1.2rem;
+        letter-spacing: 0.3em;
+    }
+
+    .loader-name {
+        font-size: 0.8rem;
+        letter-spacing: 0.3em;
+    }
+
     /* Hero */
     .hero-grid {
         grid-template-columns: 1fr;
         text-align: center;
-        gap: 60px;
+        gap: 40px;
     }
 
     .hero-buttons {
@@ -1576,8 +1639,12 @@ textarea::placeholder {
         font-size: 3.5rem;
     }
 
+    .hero-tagline {
+        font-size: 1.2rem;
+    }
+
     .hero-image-wrapper {
-        margin-top: 50px;
+        margin-top: 30px;
     }
 
     /* About */
@@ -1588,7 +1655,7 @@ textarea::placeholder {
     .about-grid {
         grid-template-columns: 1fr;
         text-align: center;
-        gap: 60px;
+        gap: 40px;
     }
 
     .about-left {
@@ -1614,11 +1681,27 @@ textarea::placeholder {
     }
 
     /* Skills */
+    .skills-section {
+        padding: 60px 0;
+    }
+
     .skills-grid {
         grid-template-columns: 1fr;
     }
 
+    .skills-intro {
+        text-align: center;
+    }
+
+    .section-title {
+        font-size: 2.2rem;
+    }
+
     /* Service Section Stacking */
+    .service-section {
+        padding: 60px 0;
+    }
+
     .service-grid {
         grid-template-columns: 1fr !important;
         gap: 30px;
@@ -1641,6 +1724,10 @@ textarea::placeholder {
     }
 
     /* Resume Section Centering */
+    .resume-section {
+        padding: 60px 0;
+    }
+
     .resume-grid {
         grid-template-columns: 1fr;
         text-align: center;
@@ -1657,23 +1744,25 @@ textarea::placeholder {
         position: relative;
     }
 
-    /* Hide the timeline line/dot on mobile as it breaks center layout */
     .resume-item::before {
         display: none;
     }
 
-    /* Alternative dot above */
     .resume-item::after {
         content: '';
         display: block;
         width: 10px;
         height: 10px;
-        background: var(--dizme-orange);
+        background: var(--glow-gold);
         border-radius: 50%;
         margin: 0 auto 15px auto;
     }
 
     /* Contact Section Centering */
+    .contact-section {
+        padding: 60px 0;
+    }
+
     .contact-grid {
         grid-template-columns: 1fr;
         text-align: center;
@@ -1685,13 +1774,27 @@ textarea::placeholder {
         gap: 15px;
     }
 
+    /* Portfolio */
+    .portfolio-section {
+        padding: 60px 0;
+    }
+
     /* Hide 3D Scene on Mobile/Tablet */
     .hidden-mobile {
         display: none !important;
     }
+
+    /* Interactive glow - reduce on tablet */
+    .interactive-glow {
+        width: 350px;
+        height: 350px;
+        opacity: 0.3;
+    }
 }
 
+/* ---- Tablet Portrait ---- */
 @media (max-width: 768px) {
+
     .portfolio-grid {
         grid-template-columns: 1fr !important;
         padding: 0 10px;
@@ -1699,5 +1802,199 @@ textarea::placeholder {
 
     .portfolio-filter {
         gap: 15px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+    }
+
+    .description {
+        font-size: 1rem;
+    }
+
+    .hero-section {
+        padding: 120px 0 60px;
+    }
+
+    .hero-name {
+        font-size: 3rem;
+    }
+
+    .hero-tagline {
+        font-size: 1.1rem;
+    }
+
+    .hello-text {
+        font-size: 1.2rem;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+
+    /* Contact form */
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    /* Bento grid */
+    .bento-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .bento-devops,
+    .bento-dev,
+    .bento-creative {
+        grid-column: span 1;
+    }
+
+    .spotlight-content {
+        padding: 25px 20px;
+    }
+
+    .orb-1,
+    .orb-2 {
+        display: none;
+    }
+
+    /* Loader sizing */
+    .loader-title {
+        font-size: 4rem;
+        letter-spacing: 0.15em;
+    }
+
+    .loader-subtitle {
+        font-size: 1rem;
+        letter-spacing: 0.25em;
+    }
+
+    .loader-name {
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+    }
+}
+
+/* ---- Phone ---- */
+@media (max-width: 480px) {
+
+    .hero-section {
+        padding: 100px 0 40px;
+    }
+
+    .hero-name {
+        font-size: 2.2rem;
+    }
+
+    .hero-tagline {
+        font-size: 0.95rem;
+    }
+
+    .hello-text {
+        font-size: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+    }
+
+    .description {
+        font-size: 0.95rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .btn {
+        padding: 10px 25px;
+        font-size: 0.9rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    /* Loader */
+    .loader-title {
+        font-size: 3rem;
+        letter-spacing: 0.1em;
+    }
+
+    .loader-subtitle {
+        font-size: 0.85rem;
+        letter-spacing: 0.15em;
+        margin-top: 1rem;
+    }
+
+    .loader-name {
+        font-size: 0.65rem;
+        letter-spacing: 0.15em;
+    }
+
+    /* Service items */
+    .service-item {
+        padding: 30px 20px;
+    }
+
+    .service-icon-box {
+        min-width: 55px;
+        height: 55px;
+        font-size: 22px;
+    }
+
+    /* Tags */
+    .tech-tag {
+        padding: 6px 14px;
+        font-size: 0.8rem;
+    }
+
+    .group-title {
+        font-size: 1.2rem;
+    }
+
+    /* Portfolio card images */
+    .item-inner img {
+        height: 260px;
+    }
+
+    /* Interactive glow - minimal on phone */
+    .interactive-glow {
+        width: 250px;
+        height: 250px;
+        opacity: 0.2;
+        filter: blur(40px);
+    }
+
+    /* Contact form spacing */
+    .contact-section {
+        padding: 40px 0;
+    }
+
+    /* Resume */
+    .resume-section {
+        padding: 40px 0;
+    }
+
+    /* Skills */
+    .skills-section {
+        padding: 40px 0;
+    }
+
+    /* About */
+    .about-section {
+        padding: 40px 0;
+    }
+
+    .image-wrapper {
+        min-height: 400px !important;
     }
 }
