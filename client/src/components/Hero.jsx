@@ -1,5 +1,5 @@
-import React, { useMemo, useState, useRef } from 'react';
-import { motion } from 'framer-motion';
+import React, { useMemo, useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
 import * as THREE from 'three';
@@ -240,53 +240,149 @@ const Scene = () => {
 };
 
 const Hero = () => {
-  return (
-    <section id="home" className="hero-section">
-      <div className="container hero-grid">
-        <motion.div
-          className="hero-content"
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: { staggerChildren: 0.15, delayChildren: 0.2 }
-            }
-          }}
-        >
-          <motion.h3 className="hello-text" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>Hello, I'm</motion.h3>
-          <motion.h1 className="hero-name" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>Nicolae Andrei</motion.h1>
-          <motion.h4 className="hero-tagline" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
-            Cloud <span className="text-green">Infrastructure Architect</span> & <span className="text-purple">DevOps Engineer</span>
-          </motion.h4>
-          <motion.p className="description" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
-            I architect scalable cloud environments and automate complex workflows. With over a decade of experience, I merge software development with robust infrastructure using <strong>AWS, Kubernetes, and AI</strong> technologies.
-          </motion.p>
-          <motion.div className="hero-buttons" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
-            <a href="#contact" className="btn">Get in Touch</a>
-            <div className="social-icons">
-              <a href="https://www.linkedin.com/in/nicolae-andrei/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i className="fa-brands fa-linkedin-in"></i></a>
-              <a href="https://github.com/androkatt" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i className="fa-brands fa-github"></i></a>
-            </div>
-          </motion.div>
-        </motion.div>
+  const [loading, setLoading] = useState(true);
 
-        {/* Width 600px, Hidden on mobile */}
-        <div className="hero-image-wrapper hidden-mobile" style={{ height: '600px', width: '600px', position: 'relative', zIndex: 1 }}>
-          <Canvas camera={{ position: [0, 0, 22], fov: 50 }}>
-            <OrbitControls
-              enableZoom={false}
-              autoRotate={true}
-              autoRotateSpeed={0.8}
-              enableDamping={true}
-            />
-            <ambientLight intensity={0.5} />
-            <Scene />
-          </Canvas>
+  // Simulate initial load sequence
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // 2 second initial luxury lock screen
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <>
+      <AnimatePresence>
+        {loading && (
+          <motion.div
+            key="loader"
+            className="initial-loader"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, y: -50 }}
+            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100vh',
+              background: 'var(--ertqa-dark)',
+              zIndex: 9999,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              pointerEvents: 'none'
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, filter: 'blur(10px)' }}
+              animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
+              transition={{ duration: 1, ease: 'easeOut' }}
+              style={{
+                fontSize: '8rem',
+                fontWeight: '900',
+                letterSpacing: '0.3em',
+                color: 'white',
+                textTransform: 'uppercase',
+                lineHeight: 1
+              }}
+            >
+              NIAN
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              style={{
+                marginTop: '1.5rem',
+                fontSize: '1.6rem',
+                color: '#d4af37',
+                letterSpacing: '0.4em',
+                textTransform: 'uppercase',
+                fontWeight: '300'
+              }}
+            >
+              Personal Portfolio
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              transition={{ delay: 0.8, duration: 1 }}
+              style={{
+                marginTop: '0.8rem',
+                fontSize: '0.9rem',
+                color: 'rgba(255,255,255,0.5)',
+                letterSpacing: '0.5em',
+                textTransform: 'uppercase',
+                fontWeight: '300'
+              }}
+            >
+              Nicolae Andrei-Gabriel
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <section id="home" className="hero-section">
+        <div className="container hero-grid">
+          <motion.div
+            className="hero-content"
+            initial="hidden"
+            animate={!loading ? "visible" : "hidden"}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.15, delayChildren: 0.4 }
+              }
+            }}
+          >
+            <motion.h3 className="hello-text" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } } }}>Hello, I'm</motion.h3>
+            <motion.h1
+              className="hero-name"
+              variants={{ hidden: { opacity: 0, y: 20, filter: 'blur(10px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 1, ease: [0.2, 0.65, 0.3, 0.9] } } }}
+              style={{ fontSize: '5rem', fontWeight: '800', letterSpacing: '-0.03em', marginBottom: '1rem' }}
+            >
+              Nicolae Andrei
+            </motion.h1>
+            <motion.h4 className="hero-tagline" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } } }}>
+              Cloud <span style={{ color: 'var(--glow-olive)' }}>Infrastructure Architect</span> & <span style={{ color: 'var(--glow-gold)' }}>DevOps Engineer</span>
+            </motion.h4>
+            <motion.p className="description" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } } }} style={{ fontWeight: '300' }}>
+              I architect scalable cloud environments and automate complex workflows. With over a decade of experience, I merge software development with robust infrastructure using <strong>AWS, Kubernetes, and AI</strong> technologies.
+            </motion.p>
+            <motion.div className="hero-buttons" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } } }}>
+              <a href="#contact" className="btn">Get in Touch</a>
+              <div className="social-icons">
+                <a href="https://www.linkedin.com/in/nicolae-andrei/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i className="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://github.com/androkatt" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i className="fa-brands fa-github"></i></a>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Width 600px, Hidden on mobile */}
+          <motion.div
+            className="hero-image-wrapper hidden-mobile"
+            style={{ height: '600px', width: '600px', position: 'relative', zIndex: 1 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={!loading ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+            transition={{ duration: 1.5, delay: 0.6, ease: "easeOut" }}
+          >
+            <Canvas camera={{ position: [0, 0, 22], fov: 50 }}>
+              <OrbitControls
+                enableZoom={false}
+                autoRotate={true}
+                autoRotateSpeed={0.8}
+                enableDamping={true}
+              />
+              <ambientLight intensity={0.5} />
+              <Scene />
+            </Canvas>
+          </motion.div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

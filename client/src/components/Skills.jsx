@@ -98,9 +98,9 @@ const Skills = () => {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8 }}
         >
-          <p className="subtitle">Expertise</p>
-          <h2 className="section-title">Technical Stack</h2>
-          <p className="description">
+          <p className="subtitle" style={{ color: 'var(--glow-olive)' }}>Expertise</p>
+          <h2 className="section-title" style={{ fontWeight: '800', letterSpacing: '-0.02em', color: 'white' }}>Technical Stack</h2>
+          <p className="description" style={{ fontWeight: '300' }}>
             My toolkit spans across infrastructure stability, code efficiency, and visual creativity. I focus on delivering end-to-end solutions.
           </p>
         </motion.div>
@@ -115,10 +115,10 @@ const Skills = () => {
           {/* DevOps & Cloud - Large Card spanning 2 columns on desktop */}
           <motion.div variants={itemVariants} className="bento-devops">
             <SpotlightCard className="tech-group" glowColor="rgba(247, 80, 35, 0.15)">
-              <h3 className="group-title text-orange">
+              <h3 className="group-title" style={{ color: 'var(--glow-olive)', fontWeight: '600' }}>
                 <i className="fa-solid fa-cloud"></i> DevOps & Cloud Architecture
               </h3>
-              <p className="group-description">
+              <p className="group-description" style={{ fontWeight: '300', color: 'var(--text-muted)' }}>
                 Building scalable and resilient infrastructure to ensure high availability and robust performance.
               </p>
               <div className="tags-container">
@@ -134,10 +134,10 @@ const Skills = () => {
           {/* Development & AI */}
           <motion.div variants={itemVariants} className="bento-dev">
             <SpotlightCard className="tech-group h-full" glowColor="rgba(67, 184, 131, 0.15)">
-              <h3 className="group-title text-green">
+              <h3 className="group-title" style={{ color: 'var(--glow-teal)', fontWeight: '600' }}>
                 <i className="fa-solid fa-code"></i> Engineering & AI
               </h3>
-              <p className="group-description">
+              <p className="group-description" style={{ fontWeight: '300', color: 'var(--text-muted)' }}>
                 Crafting efficient backend APIs and integrating advanced LLM capabilities.
               </p>
               <div className="tags-container">
@@ -153,10 +153,10 @@ const Skills = () => {
           {/* Creative Suite */}
           <motion.div variants={itemVariants} className="bento-creative">
             <SpotlightCard className="tech-group" glowColor="rgba(110, 87, 224, 0.15)">
-              <h3 className="group-title text-purple">
+              <h3 className="group-title" style={{ color: 'var(--glow-gold)', fontWeight: '600' }}>
                 <i className="fa-solid fa-pen-nib"></i> Creative & UI/UX
               </h3>
-              <p className="group-description">
+              <p className="group-description" style={{ fontWeight: '300', color: 'var(--text-muted)' }}>
                 Designing impactful visual experiences and intuitive user interfaces.
               </p>
               <div className="tags-container">

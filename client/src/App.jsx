@@ -9,10 +9,12 @@ import Solutions from './components/Solutions';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import InteractiveBackground from './components/InteractiveBackground';
 
 function App() {
   return (
     <>
+      <InteractiveBackground />
       <Navbar />
       <Hero />
       <About />
