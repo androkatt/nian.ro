@@ -283,7 +283,7 @@ const Hero = () => {
               animate={{ opacity: 0.5 }}
               transition={{ delay: 0.8, duration: 1 }}
             >
-              Nicolae Andrei-Gabriel
+              Nicolae Andrei
             </motion.div>
           </motion.div>
         )}
