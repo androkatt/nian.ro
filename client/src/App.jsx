@@ -1,30 +1,18 @@
 import React from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Skills from './components/Skills';
-import Experience from './components/Experience';
-import Portfolio from './components/Portfolio';
-import Solutions from './components/Solutions';
-import Testimonials from './components/Testimonials';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
-import InteractiveBackground from './components/InteractiveBackground';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './components/Home';
+import NotFound from './components/NotFound';
+import ServerError from './components/ServerError';
 
 function App() {
   return (
-    <>
-      <InteractiveBackground />
-      <Navbar />
-      <Hero />
-      <About />
-      <Skills />
-      <Experience />
-      <Portfolio />
-      <Solutions />
-      <Contact />
-      <Footer />
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/500" element={<ServerError />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Router>
   );
 }
 
