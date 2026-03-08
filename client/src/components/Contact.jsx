@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import WireframeWave from './WireframeWave';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -44,8 +45,11 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="contact-section">
-      <div className="container">
+    <section id="contact" className="contact-glass-section">
+      <WireframeWave />
+      <div className="contact-vanta-overlay"></div>
+
+      <div className="container contact-glass-container">
         <motion.div
           className="section-header text-center"
           initial={{ opacity: 0, y: -20 }}
@@ -53,57 +57,49 @@ const Contact = () => {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
         >
-          <h4 className="subtitle">Contact Me</h4>
-          <h2 className="section-title">Let's Collaborate</h2>
-          <p className="description mx-auto">
+          <h2 className="section-title glass-title">Let's Collaborate</h2>
+          <p className="description pt-0">
             Open to discussing DevOps consultancy, cloud migration projects, or full-stack development.
           </p>
         </motion.div>
 
-        <div className="contact-grid">
+        <div className="glass-contact-grid">
+          {/* Left Panel: Contact Info */}
           <motion.div
-            className="contact-info"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: { staggerChildren: 0.2 }
-              }
-            }}
-          >
-            <motion.div className="info-item" variants={{ hidden: { opacity: 0, x: -30 }, visible: { opacity: 1, x: 0 } }}>
-              <div className="icon-circle bg-mint">
-                <i className="fa-solid fa-envelope text-green"></i>
-              </div>
-              <div className="info-text">
-                <h5>Email</h5>
-                <p>andrei@nian.ro</p>
-              </div>
-            </motion.div>
-
-            <motion.div className="info-item" variants={{ hidden: { opacity: 0, x: -30 }, visible: { opacity: 1, x: 0 } }}>
-              <div className="icon-circle bg-lavender">
-                <i className="fa-solid fa-phone text-purple"></i>
-              </div>
-              <div className="info-text">
-                <h5>Phone</h5>
-                <p>+40 764 673 211</p>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            className="contact-form-wrapper"
-            initial={{ opacity: 0, x: 50 }}
+            className="glass-panel info-panel"
+            initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <form onSubmit={handleSubmit}>
-              <div className="form-row">
+            <div className="glass-info-item">
+              <i className="fa-regular fa-envelope glass-icon"></i>
+              <div className="glass-info-text">
+                <h5>Email</h5>
+                <p>andrei@nian.ro</p>
+              </div>
+            </div>
+
+            <div className="glass-info-item">
+              <i className="fa-solid fa-phone glass-icon"></i>
+              <div className="glass-info-text">
+                <h5>Phone</h5>
+                <p>+40 764 673 211</p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right Panel: Form */}
+          <motion.div
+            className="glass-panel form-panel"
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+          >
+            <form onSubmit={handleSubmit} className="glass-form">
+              <div className="glass-input-group">
+                <label>Your Name</label>
                 <input
                   type="text"
                   name="name"
@@ -112,6 +108,10 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                 />
+              </div>
+
+              <div className="glass-input-group">
+                <label>Your Email</label>
                 <input
                   type="email"
                   name="email"
@@ -121,7 +121,9 @@ const Contact = () => {
                   required
                 />
               </div>
-              <div className="form-row">
+
+              <div className="glass-input-group">
+                <label>Your Phone (Optional)</label>
                 <input
                   type="text"
                   name="phone"
@@ -129,6 +131,10 @@ const Contact = () => {
                   value={formData.phone}
                   onChange={handleChange}
                 />
+              </div>
+
+              <div className="glass-input-group">
+                <label>Subject</label>
                 <input
                   type="text"
                   name="subject"
@@ -137,20 +143,25 @@ const Contact = () => {
                   onChange={handleChange}
                 />
               </div>
-              <textarea
-                name="message"
-                rows="6"
-                placeholder="How can I help you?"
-                value={formData.message}
-                onChange={handleChange}
-                required
-              ></textarea>
 
-              <button type="submit" className="btn" disabled={status === 'sending'}>
+              <div className="glass-input-group">
+                <label>How can I help you?</label>
+                <textarea
+                  name="message"
+                  rows="3"
+                  placeholder="How can I help you?"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                ></textarea>
+              </div>
+
+              <button type="submit" className="glass-btn btn" disabled={status === 'sending'}>
                 {status === 'sending' ? 'Sending...' : 'Send Message'}
               </button>
-              {status === 'success' && <p className="text-green" style={{ marginTop: '10px' }}>Message sent successfully!</p>}
-              {status === 'error' && <p className="text-orange" style={{ marginTop: '10px' }}>Failed to send message. Please try again.</p>}
+
+              {status === 'success' && <p className="text-green" style={{ marginTop: '15px', textAlign: 'center' }}>Message sent successfully!</p>}
+              {status === 'error' && <p className="text-orange" style={{ marginTop: '15px', textAlign: 'center' }}>Failed to send message. Please try again.</p>}
             </form>
           </motion.div>
         </div>
