@@ -9,12 +9,12 @@ import Solutions from './Solutions';
 import LatestArticles from './LatestArticles';
 import Contact from './Contact';
 import Footer from './Footer';
-import InteractiveBackground from './InteractiveBackground';
+import WireframeWave from './WireframeWave';
 
 const Home = () => {
     return (
         <>
-            <InteractiveBackground />
+            <WireframeWave />
             <Navbar />
             <Hero />
             <About />

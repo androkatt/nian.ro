@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { articles } from '../data/articles';
 import { ArrowRight, ChevronLeft } from 'lucide-react';
-import InteractiveBackground from './InteractiveBackground';
+import WireframeWave from './WireframeWave';
+import Navbar from './Navbar';
 import Footer from './Footer';
 
 const ArticlesIndex = () => {
     return (
         <>
-            <InteractiveBackground />
+            <WireframeWave />
+            <Navbar />
             <div className="page-wrapper articles-page">
                 <div className="container">
                     <motion.div

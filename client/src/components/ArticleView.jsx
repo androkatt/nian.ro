@@ -3,7 +3,8 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { articles } from '../data/articles';
 import { ChevronLeft } from 'lucide-react';
-import InteractiveBackground from './InteractiveBackground';
+import WireframeWave from './WireframeWave';
+import Navbar from './Navbar';
 import Footer from './Footer';
 import Markdown from 'markdown-to-jsx';
 
@@ -15,18 +16,33 @@ const ArticleView = () => {
 
     // Scroll to top on load or redirect to 404 if not found
     useEffect(() => {
-        if (!article) {
-            navigate('/404');
-        } else {
+        if (article) { // Only scroll to top if article is found
             window.scrollTo(0, 0);
         }
-    }, [article, navigate]);
+        // The navigation to /404 is now handled by the conditional render below
+    }, [article]); // Removed navigate from dependencies as it's not used for navigation here
 
-    if (!article) return null;
+    if (!article) {
+        return (
+            <>
+                <WireframeWave />
+                <Navbar />
+                <div className="page-wrapper articles-page" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 'calc(100vh - 100px)' }}>
+                    <div className="text-center">
+                        <h1 style={{ fontSize: '3rem', marginBottom: '1rem', color: '#fff' }}>Article Not Found</h1>
+                        <p style={{ fontSize: '1.2rem', color: '#ccc' }}>The article you are looking for does not exist.</p>
+                        <Link to="/articles" className="btn btn-primary mt-4">Go to Articles</Link>
+                    </div>
+                </div>
+                <Footer />
+            </>
+        );
+    }
 
     return (
         <>
-            <InteractiveBackground />
+            <WireframeWave />
+            <Navbar />
             <div className="page-wrapper article-reader-page">
                 <article className="container article-container">
                     <motion.div

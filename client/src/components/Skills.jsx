@@ -1,62 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
-// Spotlight Card Component for the interactive hover effect
-const SpotlightCard = ({ children, className = '', glowColor = 'rgba(247, 80, 35, 0.4)' }) => {
-  const divRef = useRef(null);
-  const [isFocused, setIsFocused] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [opacity, setOpacity] = useState(0);
+// SpotlightCard removed in favor of standard glass-panels
 
-  const handleMouseMove = (e) => {
-    if (!divRef.current || isFocused) return;
-
-    const div = divRef.current;
-    const rect = div.getBoundingClientRect();
-
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  };
-
-  const handleFocus = () => {
-    setIsFocused(true);
-    setOpacity(1);
-  };
-
-  const handleBlur = () => {
-    setIsFocused(false);
-    setOpacity(0);
-  };
-
-  const handleMouseEnter = () => {
-    setOpacity(1);
-  };
-
-  const handleMouseLeave = () => {
-    setOpacity(0);
-  };
-
-  return (
-    <motion.div
-      ref={divRef}
-      onMouseMove={handleMouseMove}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      className={`spotlight-card ${className}`}
-      whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-    >
-      <div
-        className="spotlight-effect pointer-events-none absolute -inset-px opacity-0 transition duration-300"
-        style={{
-          opacity,
-          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${glowColor}, transparent 40%)`,
-        }}
-      />
-      <div className="spotlight-content">{children}</div>
-    </motion.div>
-  );
-};
 
 const Skills = () => {
   // Animation Variants
@@ -86,10 +32,6 @@ const Skills = () => {
 
   return (
     <section id="skills" className="skills-section">
-      {/* Background glowing orbs */}
-      <div className="glow-orb orb-1"></div>
-      <div className="glow-orb orb-2"></div>
-
       <div className="container relative z-10">
         <motion.div
           className="skills-intro"
@@ -114,7 +56,7 @@ const Skills = () => {
         >
           {/* DevOps & Cloud - Large Card spanning 2 columns on desktop */}
           <motion.div variants={itemVariants} className="bento-devops">
-            <SpotlightCard className="tech-group" glowColor="rgba(247, 80, 35, 0.15)">
+            <div className="tech-group glass-panel" style={{ padding: '40px', height: '100%', display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <h3 className="group-title" style={{ color: 'var(--glow-olive)', fontWeight: '600' }}>
                 <i className="fa-solid fa-cloud"></i> DevOps & Cloud Architecture
               </h3>
@@ -123,17 +65,17 @@ const Skills = () => {
               </p>
               <div className="tags-container">
                 {['AWS (EC2, RDS, Lambda)', 'Kubernetes (K8s)', 'Rancher', 'GitLab CI/CD', 'Linux Administration', 'Grafana', 'Icinga', 'Docker'].map((tag, idx) => (
-                  <motion.span key={idx} variants={tagVariants} className="tech-tag tag-orange">
+                  <motion.span key={idx} variants={tagVariants} className="tech-tag tag-olive">
                     {tag}
                   </motion.span>
                 ))}
               </div>
-            </SpotlightCard>
+            </div>
           </motion.div>
 
           {/* Development & AI */}
           <motion.div variants={itemVariants} className="bento-dev">
-            <SpotlightCard className="tech-group h-full" glowColor="rgba(67, 184, 131, 0.15)">
+            <div className="tech-group glass-panel" style={{ padding: '40px', height: '100%', display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <h3 className="group-title" style={{ color: 'var(--glow-teal)', fontWeight: '600' }}>
                 <i className="fa-solid fa-code"></i> Engineering & AI
               </h3>
@@ -142,17 +84,17 @@ const Skills = () => {
               </p>
               <div className="tags-container">
                 {['Node.js / Express', 'PHP (Backend)', 'JavaScript / React', 'SQL & MySQL', 'Google Vertex AI', 'LLM Integration', 'CMS Architecture'].map((tag, idx) => (
-                  <motion.span key={idx} variants={tagVariants} className="tech-tag tag-green">
+                  <motion.span key={idx} variants={tagVariants} className="tech-tag tag-teal">
                     {tag}
                   </motion.span>
                 ))}
               </div>
-            </SpotlightCard>
+            </div>
           </motion.div>
 
           {/* Creative Suite */}
           <motion.div variants={itemVariants} className="bento-creative">
-            <SpotlightCard className="tech-group" glowColor="rgba(110, 87, 224, 0.15)">
+            <div className="tech-group glass-panel" style={{ padding: '40px', height: '100%', display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <h3 className="group-title" style={{ color: 'var(--glow-gold)', fontWeight: '600' }}>
                 <i className="fa-solid fa-pen-nib"></i> Creative & UI/UX
               </h3>
@@ -161,12 +103,12 @@ const Skills = () => {
               </p>
               <div className="tags-container">
                 {['Photoshop', 'Illustrator', 'Premiere Pro', 'After Effects', 'Figma', 'UI/UX Design', 'Video Editing'].map((tag, idx) => (
-                  <motion.span key={idx} variants={tagVariants} className="tech-tag tag-purple">
+                  <motion.span key={idx} variants={tagVariants} className="tech-tag tag-gold">
                     {tag}
                   </motion.span>
                 ))}
               </div>
-            </SpotlightCard>
+            </div>
           </motion.div>
         </motion.div>
       </div>

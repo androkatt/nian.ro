@@ -32,6 +32,8 @@
     --neu-shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+
+
 /* =========================================
    2. GLOBAL RESET
    ========================================= */
@@ -59,6 +61,7 @@ body {
 
 a {
     text-decoration: none;
+    color: var(--text-white);
 }
 
 ul {
@@ -142,35 +145,52 @@ ul {
 
 .interactive-glow {
     position: absolute;
-    width: 500px;
-    height: 500px;
+    width: 600px;
+    height: 600px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(142, 160, 114, 0.15) 0%, rgba(212, 175, 55, 0.1) 40%, transparent 70%);
-    filter: blur(60px);
-    opacity: 0.5;
+    background: radial-gradient(circle closest-side, rgba(142, 160, 114, 0.12) 0%, rgba(212, 175, 55, 0.05) 50%, rgba(212, 175, 55, 0) 100%);
+    pointer-events: none;
     transform: translate(-50%, -50%);
-    transition: opacity 0.5s ease;
+    transition: opacity 0.3s ease;
 }
 
 /* =========================================
-   3. NAVIGATION (HEADER)
+   3. NAVBAR
    ========================================= */
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 999;
+    z-index: 1000;
     padding: 15px 0;
-    background-color: var(--nav-bg);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    background: transparent;
+}
+
+.navbar.scrolled {
+    background: var(--nav-bg);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: var(--glass-shadow);
+    padding: 10px 0;
+    border-bottom: var(--delicate-border);
 }
 
 .nav-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text-white);
+    letter-spacing: -1px;
 }
 
 /* Logo */
@@ -190,7 +210,7 @@ ul {
     width: 35px;
     height: 35px;
     background: var(--dizme-orange);
-    color: white;
+    color: var(--text-white);
     border-radius: 50% 50% 0 50%;
     font-size: 18px;
     font-weight: 700;
@@ -199,14 +219,20 @@ ul {
 /* Links */
 .nav-links {
     display: flex;
-    gap: 30px;
+    gap: 35px;
 }
 
 .nav-links a {
-    color: var(--text-white);
+    color: var(--text-muted);
+    font-size: 1rem;
     font-weight: 500;
-    font-size: 16px;
-    transition: color 0.3s;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--text-white);
 }
 
 .nav-links a:hover,
@@ -410,7 +436,7 @@ ul {
    ========================================= */
 .about-section {
     padding: 100px 0;
-    background-color: var(--dizme-dark);
+    background-color: transparent;
     position: relative;
     z-index: 1;
 }
@@ -502,7 +528,7 @@ ul {
    ========================================= */
 .skills-section {
     padding: 100px 0;
-    background-color: var(--dizme-card);
+    background-color: transparent;
     position: relative;
     z-index: 1;
 }
@@ -559,7 +585,7 @@ footer {
 
 .portfolio-section {
     padding: 100px 0;
-    background-color: var(--dizme-dark);
+    background-color: transparent;
     position: relative;
     z-index: 1;
 }
@@ -715,7 +741,7 @@ footer {
 
 .service-section {
     padding: 100px 0;
-    background-color: var(--dizme-dark);
+    background-color: transparent;
     position: relative;
     z-index: 1;
 }
@@ -729,7 +755,6 @@ footer {
 }
 
 .service-item {
-    background-color: var(--dizme-dark);
     padding: 50px 40px;
     border-radius: 12px;
     display: flex;
@@ -845,7 +870,7 @@ footer {
 
 .testimonials-section {
     padding: 100px 0;
-    background-color: var(--dizme-dark);
+    background-color: transparent;
     position: relative;
     overflow: hidden;
 }
@@ -1086,7 +1111,7 @@ footer {
 
 .contact-section {
     padding: 100px 0;
-    background-color: var(--dizme-dark);
+    background-color: transparent;
     position: relative;
     z-index: 1;
 }
@@ -1201,7 +1226,7 @@ textarea::placeholder {
 
 .resume-section {
     padding: 100px 0;
-    background-color: var(--dizme-card);
+    background-color: transparent;
     position: relative;
     z-index: 1;
 }
@@ -1289,7 +1314,7 @@ textarea::placeholder {
 .skills-section {
     position: relative;
     padding: 120px 0;
-    background-color: var(--dizme-card);
+    background-color: transparent;
     overflow: hidden;
     /* Contains the glowing orbs */
 }
@@ -1451,12 +1476,13 @@ textarea::placeholder {
     font-size: 0.9rem;
     font-weight: 500;
     letter-spacing: 0.01em;
-    background: var(--dizme-dark);
-    border: 1px solid rgba(255, 255, 255, 0.02);
-    color: var(--text-muted);
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(20, 20, 20, 0.4);
     transition: all 0.3s ease;
-    box-shadow: var(--neu-shadow-outer);
     cursor: default;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 .tech-tag:hover {
@@ -1464,22 +1490,25 @@ textarea::placeholder {
     color: #fff;
 }
 
-.tag-orange:hover {
-    background: rgba(247, 80, 35, 0.15);
-    border-color: rgba(247, 80, 35, 0.4);
-    box-shadow: 0 5px 15px rgba(247, 80, 35, 0.2);
+/* Matching var(--glow-olive): #8ea072 (142, 160, 114) */
+.tag-olive:hover {
+    background: rgba(142, 160, 114, 0.15);
+    border-color: rgba(142, 160, 114, 0.4);
+    box-shadow: 0 5px 15px rgba(142, 160, 114, 0.2);
 }
 
-.tag-green:hover {
-    background: rgba(67, 184, 131, 0.15);
-    border-color: rgba(67, 184, 131, 0.4);
-    box-shadow: 0 5px 15px rgba(67, 184, 131, 0.2);
+/* Matching var(--glow-teal): #38968f (56, 150, 143) */
+.tag-teal:hover {
+    background: rgba(56, 150, 143, 0.15);
+    border-color: rgba(56, 150, 143, 0.4);
+    box-shadow: 0 5px 15px rgba(56, 150, 143, 0.2);
 }
 
-.tag-purple:hover {
-    background: rgba(110, 87, 224, 0.15);
-    border-color: rgba(110, 87, 224, 0.4);
-    box-shadow: 0 5px 15px rgba(110, 87, 224, 0.2);
+/* Matching var(--glow-gold): #d4af37 (212, 175, 55) */
+.tag-gold:hover {
+    background: rgba(212, 175, 55, 0.15);
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
 }
 
 @media (max-width: 1024px) {
@@ -1607,7 +1636,7 @@ textarea::placeholder {
     padding: 100px 0;
     overflow: hidden;
     color: var(--text-white);
-    background-color: var(--ertqa-dark);
+    background-color: transparent;
 }
 
 .contact-vanta-overlay {

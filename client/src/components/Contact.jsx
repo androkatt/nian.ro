@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import WireframeWave from './WireframeWave';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -46,7 +45,6 @@ const Contact = () => {
 
   return (
     <section id="contact" className="contact-glass-section">
-      <WireframeWave />
       <div className="contact-vanta-overlay"></div>
 
       <div className="container contact-glass-container">

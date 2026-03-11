@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import youtubeImg from '../img/youtube.jpg';
-import aiImg from '../img/AI_SYSTEM.jpg';
-import infraImg from '../img/infra.jpeg';
-import devopsImg from '../img/devops.png';
 
 const Portfolio = () => {
   const [filter, setFilter] = useState('all');
@@ -93,10 +89,10 @@ const Portfolio = () => {
       bgGradient: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
       borderColor: '#1e293b'
     },
-    { id: 3, category: 'youtube', title: 'Tech Insights', type: 'YouTube Channel', img: youtubeImg, link: 'https://www.youtube.com/@andreinicolae8305/videos' },
-    { id: 4, category: 'cloud', title: 'Cloud Infrastructure', type: 'AWS & Kubernetes', img: infraImg, link: '#' },
-    { id: 5, category: 'ai', title: 'AI Automation', type: 'Integration', img: aiImg, link: '#' },
-    { id: 6, category: 'devops', title: 'DevOps Pipelines', type: 'CI/CD Workflow', img: devopsImg, link: '#' },
+    { id: 3, category: 'youtube', title: 'Video Portfolio', type: 'YouTube Channel', link: 'https://www.youtube.com/@andreinicolae8305/videos', isGlass: true, icon: 'fa-brands fa-youtube', glow: 'rgba(239, 68, 68, 0.15)', borderColor: 'rgba(239, 68, 68, 0.3)' },
+    { id: 4, category: 'cloud', title: 'Infrastructure', type: 'AWS & Kubernetes', link: '#', isGlass: true, icon: 'fa-solid fa-cloud', glow: 'rgba(14, 165, 233, 0.15)', borderColor: 'rgba(14, 165, 233, 0.3)' },
+    { id: 5, category: 'ai', title: 'AI Automation', type: 'Integration', link: '#', isGlass: true, icon: 'fa-solid fa-microchip', glow: 'rgba(139, 92, 246, 0.15)', borderColor: 'rgba(139, 92, 246, 0.3)' },
+    { id: 6, category: 'devops', title: 'DevOps Pipelines', type: 'CI/CD Workflow', link: '#', isGlass: true, icon: 'fa-solid fa-infinity', glow: 'rgba(16, 185, 129, 0.15)', borderColor: 'rgba(16, 185, 129, 0.3)' },
   ];
 
   const handleFilterChange = (category) => {
@@ -155,18 +151,14 @@ const Portfolio = () => {
                   transition={{ duration: 0.5, type: 'spring' }}
                   className="portfolio-item"
                 >
-                  {project.isSpecial || project.id === 3 || isComingSoon ? (
+                  {project.isSpecial || project.isGlass ? (
                     <Wrapper
                       href={isClickable ? project.link : undefined}
                       target={isClickable ? "_blank" : undefined}
                       rel={isClickable ? "noopener noreferrer" : undefined}
-                      className="item-inner"
+                      className="item-inner glass-panel"
                       style={{
                         minHeight: '420px',
-                        background: project.isSpecial ? project.bgGradient : `url(${project.img})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        border: `1px solid ${project.borderColor || 'rgba(255,255,255,0.1)'}`,
                         color: 'white',
                         display: 'flex',
                         flexDirection: 'column',
@@ -176,9 +168,22 @@ const Portfolio = () => {
                         position: 'relative',
                         overflow: 'hidden',
                         textDecoration: 'none',
-                        cursor: isClickable ? 'pointer' : 'default'
+                        cursor: isClickable ? 'pointer' : 'default',
                       }}
                     >
+                      {project.isGlass && (
+                        <div style={{
+                          position: 'absolute',
+                          top: '-10%',
+                          right: '-10%',
+                          width: '250px',
+                          height: '250px',
+                          background: `radial-gradient(circle, ${project.glow} 0%, transparent 70%)`,
+                          filter: 'blur(40px)',
+                          zIndex: 1,
+                          pointerEvents: 'none'
+                        }} />
+                      )}
                       {/* Dark Overlay for Coming Soon */}
                       {isComingSoon && (
                         <div style={{
@@ -203,56 +208,32 @@ const Portfolio = () => {
 
                       {/* Top Content Group */}
                       <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', zIndex: 2 }}>
-                        {project.id === 3 && (
-                          <h3 style={{
-                            fontSize: '1.8rem',
-                            fontWeight: '800',
-                            letterSpacing: '-0.02em',
-                            marginBottom: '0.5rem',
-                            color: '#fff',
-                            textShadow: '0 2px 10px rgba(0,0,0,0.8)'
-                          }}>
-                            Video Portofolio
-                          </h3>
-                        )}
-
-                        {project.id === 4 && (
-                          <h3 style={{
-                            fontSize: '1.8rem',
-                            fontWeight: '800',
-                            letterSpacing: '-0.02em',
-                            marginBottom: '0.5rem',
-                            color: '#fff',
-                            textShadow: '0 2px 10px rgba(0,0,0,0.8)'
-                          }}>
-                            Infrastructure projects
-                          </h3>
-                        )}
-
-                        {project.id === 5 && (
-                          <h3 style={{
-                            fontSize: '1.8rem',
-                            fontWeight: '800',
-                            letterSpacing: '-0.02em',
-                            marginBottom: '0.5rem',
-                            color: '#fff',
-                            textShadow: '0 2px 10px rgba(0,0,0,0.8)'
-                          }}>
-                            AI Projects
-                          </h3>
-                        )}
-
-                        {project.id === 6 && (
-                          <h3 style={{
-                            fontSize: '1.8rem',
-                            fontWeight: '800',
-                            letterSpacing: '-0.02em',
-                            marginBottom: '0.5rem',
-                            color: '#fff',
-                            textShadow: '0 2px 10px rgba(0,0,0,0.8)'
-                          }}>
-                            DEVOPS projects
-                          </h3>
+                        {project.isGlass && (
+                          <>
+                            <i className={project.icon} style={{
+                              fontSize: '4rem',
+                              color: 'rgba(255,255,255,0.9)',
+                              marginBottom: '1.5rem',
+                              textShadow: `0 0 20px ${project.glow}`
+                            }}></i>
+                            <h3 style={{
+                              fontSize: '1.8rem',
+                              fontWeight: '800',
+                              letterSpacing: '-0.02em',
+                              marginBottom: '0.5rem',
+                              color: '#fff',
+                              textShadow: '0 2px 10px rgba(0,0,0,0.5)'
+                            }}>
+                              {project.title}
+                            </h3>
+                            <p style={{
+                              fontSize: '1rem',
+                              color: 'rgba(255,255,255,0.7)',
+                              maxWidth: '220px'
+                            }}>
+                              {project.type}
+                            </p>
+                          </>
                         )}
 
                         {project.isSpecial && (

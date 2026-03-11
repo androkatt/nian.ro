@@ -38,29 +38,35 @@ const Experience = () => {
             </motion.h3>
 
             <motion.div className="resume-item" variants={{ hidden: { opacity: 0, x: -30 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
-              <span className="resume-date">Jun 2014 - Present</span>
-              <h4 className="resume-role">Cloud App Management / DevOps</h4>
-              <h5 className="resume-place">Pirelli Tyres Romania</h5>
-              <p>
-                <strong>Infrastructure:</strong> Managing AWS (EC2, RDS, Lambda, CloudFront, Route53) and Kubernetes clusters via Rancher.<br />
-                <strong>DevOps:</strong> GitLab Administrator (CI/CD pipelines, runners). Monitoring with Grafana & Icinga.<br />
-                <strong>Dev & AI:</strong> Developing PHP/JS apps and utilizing Google Vertex AI agents.<br />
-                <strong>Web Design:</strong> Designed digital assets for corporate portals.
-              </p>
+              <div className="glass-panel" style={{ padding: '25px', marginTop: '-10px', marginBottom: '20px' }}>
+                <span className="resume-date">Jun 2014 - Present</span>
+                <h4 className="resume-role">Cloud App Management / DevOps</h4>
+                <h5 className="resume-place">Pirelli Tyres Romania</h5>
+                <p>
+                  <strong>Infrastructure:</strong> Managing AWS (EC2, RDS, Lambda, CloudFront, Route53) and Kubernetes clusters via Rancher.<br />
+                  <strong>DevOps:</strong> GitLab Administrator (CI/CD pipelines, runners). Monitoring with Grafana & Icinga.<br />
+                  <strong>Dev & AI:</strong> Developing PHP/JS apps and utilizing Google Vertex AI agents.<br />
+                  <strong>Web Design:</strong> Designed digital assets for corporate portals.
+                </p>
+              </div>
             </motion.div>
 
             <motion.div className="resume-item" variants={{ hidden: { opacity: 0, x: -30 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
-              <span className="resume-date">Feb 2011 - Apr 2011</span>
-              <h4 className="resume-role">DTP Operator</h4>
-              <h5 className="resume-place">Media-Concept</h5>
-              <p>Pre-press preparation, layout modification, and supervision of printing processes using Adobe Suite.</p>
+              <div className="glass-panel" style={{ padding: '25px', marginTop: '-10px', marginBottom: '20px' }}>
+                <span className="resume-date">Feb 2011 - Apr 2011</span>
+                <h4 className="resume-role">DTP Operator</h4>
+                <h5 className="resume-place">Media-Concept</h5>
+                <p>Pre-press preparation, layout modification, and supervision of printing processes using Adobe Suite.</p>
+              </div>
             </motion.div>
 
             <motion.div className="resume-item" variants={{ hidden: { opacity: 0, x: -30 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
-              <span className="resume-date">Nov 2007 - Feb 2011</span>
-              <h4 className="resume-role">DTP Designer</h4>
-              <h5 className="resume-place">SITECH</h5>
-              <p>Book and brochure design, technical layout, and large format printing supervision.</p>
+              <div className="glass-panel" style={{ padding: '25px', marginTop: '-10px', marginBottom: '20px' }}>
+                <span className="resume-date">Nov 2007 - Feb 2011</span>
+                <h4 className="resume-role">DTP Designer</h4>
+                <h5 className="resume-place">SITECH</h5>
+                <p>Book and brochure design, technical layout, and large format printing supervision.</p>
+              </div>
             </motion.div>
           </motion.div>
 
@@ -82,27 +88,33 @@ const Experience = () => {
             </motion.h3>
 
             <motion.div className="resume-item" variants={{ hidden: { opacity: 0, x: 30 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
-              <span className="resume-date">2013 - 2015</span>
-              <h4 className="resume-role">Master's Degree</h4>
-              <h5 className="resume-place">University of Craiova</h5>
-              <p>Artificial Intelligence. Advanced algorithms and data processing.</p>
+              <div className="glass-panel" style={{ padding: '25px', marginTop: '-10px', marginBottom: '20px' }}>
+                <span className="resume-date">2013 - 2015</span>
+                <h4 className="resume-role">Master's Degree</h4>
+                <h5 className="resume-place">University of Craiova</h5>
+                <p>Artificial Intelligence. Advanced algorithms and data processing.</p>
+              </div>
             </motion.div>
 
             <motion.div className="resume-item" variants={{ hidden: { opacity: 0, x: 30 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
-              <span className="resume-date">2008 - 2011</span>
-              <h4 className="resume-role">Bachelor's Degree</h4>
-              <h5 className="resume-place">University of Craiova</h5>
-              <p>Computer Science. Fundamentals of software engineering and databases.</p>
+              <div className="glass-panel" style={{ padding: '25px', marginTop: '-10px', marginBottom: '20px' }}>
+                <span className="resume-date">2008 - 2011</span>
+                <h4 className="resume-role">Bachelor's Degree</h4>
+                <h5 className="resume-place">University of Craiova</h5>
+                <p>Computer Science. Fundamentals of software engineering and databases.</p>
+              </div>
             </motion.div>
 
             <motion.div className="resume-item" variants={{ hidden: { opacity: 0, x: 30 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
-              <span className="resume-date">Certifications</span>
-              <h4 className="resume-role">Professional Skills</h4>
-              <h5 className="resume-place">Accredited</h5>
-              <p>
-                <strong>ITIL V3 Foundation</strong><br />
-                <strong>Languages:</strong> English, Italian, Romanian.
-              </p>
+              <div className="glass-panel" style={{ padding: '25px', marginTop: '-10px', marginBottom: '20px' }}>
+                <span className="resume-date">Certifications</span>
+                <h4 className="resume-role">Professional Skills</h4>
+                <h5 className="resume-place">Accredited</h5>
+                <p>
+                  <strong>ITIL V3 Foundation</strong><br />
+                  <strong>Languages:</strong> English, Italian, Romanian.
+                </p>
+              </div>
             </motion.div>
           </motion.div>
         </div>

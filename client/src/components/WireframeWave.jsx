@@ -123,7 +123,7 @@ const FlowingRibbonLines = () => {
 
 const WireframeWave = () => {
     return (
-        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }}>
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }}>
             <Canvas camera={{ position: [0, 0, 8], fov: 50 }}>
                 {/* Soft fog to fade the ribbon gracefully into the dark background at the edges/depth */}
                 <fog attach="fog" args={['#0a0a0c', 3, 15]} />

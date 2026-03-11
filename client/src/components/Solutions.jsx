@@ -33,7 +33,7 @@ const Solutions = () => {
           }}
         >
           <motion.div
-            className="service-item tilt-card"
+            className="service-item tilt-card glass-panel"
             variants={{
               hidden: { opacity: 0, y: 30 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
@@ -50,7 +50,7 @@ const Solutions = () => {
           </motion.div>
 
           <motion.div
-            className="service-item tilt-card"
+            className="service-item tilt-card glass-panel"
             variants={{
               hidden: { opacity: 0, y: 30 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
@@ -67,7 +67,7 @@ const Solutions = () => {
           </motion.div>
 
           <motion.div
-            className="service-item tilt-card"
+            className="service-item tilt-card glass-panel"
             variants={{
               hidden: { opacity: 0, y: 30 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
@@ -84,7 +84,7 @@ const Solutions = () => {
           </motion.div>
 
           <motion.div
-            className="service-item tilt-card"
+            className="service-item tilt-card glass-panel"
             variants={{
               hidden: { opacity: 0, y: 30 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
