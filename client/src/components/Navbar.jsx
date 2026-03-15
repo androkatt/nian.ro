@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import LoaderLogo from './LoaderLogo';
+
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -21,8 +23,7 @@ const Navbar = () => {
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="container nav-wrapper">
         <a href="#" className="logo">
-          <span className="logo-icon">N</span>
-          Ni<span className="text-orange">AN</span>
+          <LoaderLogo className="nav-svg-logo" />
         </a>
 
         <div className={`nav-links ${mobileMenuOpen ? 'mobile-active' : ''}`} style={mobileMenuOpen ? { display: 'flex', flexDirection: 'column', position: 'absolute', top: '100%', left: 0, width: '100%', background: 'var(--nav-bg)', padding: '20px' } : {}}>
