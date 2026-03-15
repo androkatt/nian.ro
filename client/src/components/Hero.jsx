@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
 import * as THREE from 'three';
+import LoaderLogo from './LoaderLogo';
 
 // Tech Data
 const techs = [
@@ -262,12 +263,12 @@ const Hero = () => {
             transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
           >
             <motion.div
-              className="loader-title"
+              className="loader-svg-container"
               initial={{ scale: 0.9, opacity: 0, filter: 'blur(10px)' }}
               animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
               transition={{ duration: 1, ease: 'easeOut' }}
             >
-              NIAN
+              <LoaderLogo className="loader-svg-logo" />
             </motion.div>
             <motion.div
               className="loader-subtitle"
