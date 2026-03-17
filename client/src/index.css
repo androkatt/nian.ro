@@ -2227,7 +2227,10 @@ textarea::placeholder {
 }
 
 .articles-carousel {
-    display: flex;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 320px;
+    align-items: stretch;
     gap: 20px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
@@ -2246,17 +2249,19 @@ textarea::placeholder {
 .article-card-link {
     text-decoration: none;
     color: inherit;
-    flex: 0 0 320px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     scroll-snap-align: start;
-    display: block;
 }
 
 .article-card {
     padding: 25px;
     border-radius: 12px;
-    height: 100%;
+    flex: 1;
     display: flex;
     flex-direction: column;
+    height: 100%;
     transition: all 0.3s ease;
     cursor: pointer;
 }
@@ -2359,6 +2364,15 @@ textarea::placeholder {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 30px;
+}
+
+.articles-grid > div {
+    display: flex;
+    height: 100%;
+}
+
+.articles-grid .article-card-link {
+    flex: 1;
 }
 
 /* Individual Article View */
