@@ -16,7 +16,7 @@ jobs:
 
       # 2. Instalăm Node.js în "calculatorul" GitHub-ului ca să putem construi site-ul
       - name: 🔧 Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
@@ -25,58 +25,63 @@ jobs:
         run: |
           echo "🔹 Intram in folderul client..."
           cd client
-          
+
           echo "🔹 Instalam dependintele pentru React..."
           npm install
-          
+
           echo "🔹 Construim site-ul (Build)..."
           npm run build
-          
+
           echo "🔹 Iesim inapoi in radacina..."
           cd ..
-          
+
           echo "🔹 Cream folderul 'public' in server (daca nu exista)..."
           mkdir -p server/public
-          
+
           echo "🔹 Copiem site-ul construit din React in Server..."
           # Vite pune build-ul in 'dist', noi il mutam in 'server/public'
           cp -r client/dist/* server/public/
-          
+
           echo "✅ Gata! Folderul server contine acum si site-ul!"
 
       # 4. Trimitem folderul SERVER (care acum are si site-ul in el) pe Hostico
+      #    nian.ro ruleaza din folderul ~/nian.ro (Application root in "Setup Node.js App").
+      #    cPanel nu permite public_html ca Application root.
       - name: 📂 Sync SERVER files via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          
-          # Unde ajung pe hosting (radacina site-ului)
-          server-dir: cv.nian.ro/
-          
+
+          # Unde ajung pe hosting (Application root pentru nian.ro)
+          server-dir: nian.ro/
+
           # Ce trimitem (doar folderul server, care acum e PLIN)
           local-dir: ./server/
-          
-          # Excludem gunoaiele
+
+          # Excludem gunoaiele (si .htaccess, gestionat de cPanel / Passenger)
           exclude: |
             **/.git*
+            **/.git*/**
             **/node_modules/**
             .gitignore
             .env
+            .htaccess
+            .cpanel.yml
             **/.DS_Store
 
-      # 5. Restartam Node.js ca sa vada noile fisiere
+      # 5. Restartam Node.js (Passenger) ca sa vada noile fisiere
       - name: 🔄 Trigger Restart
         run: |
           mkdir -p tmp
           date > tmp/restart.txt
-      
+
       - name: 🚀 Upload Restart Trigger
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: cv.nian.ro/tmp/
+          server-dir: nian.ro/tmp/
           local-dir: ./tmp/

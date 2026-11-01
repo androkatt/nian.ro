@@ -1,6 +1,0 @@
----
-deployment:
-  tasks:
-    - export DEPLOYPATH=/home/hoxtcviw/cv.nian.ro
-    - /bin/cp -R * $DEPLOYPATH
-    - /bin/cp package.json $DEPLOYPATH
