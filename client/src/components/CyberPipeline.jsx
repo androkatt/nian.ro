@@ -1,371 +1,358 @@
-import React, { useState, useEffect } from 'react';
-import { Github, Settings, Container, ShipWheel, Cloud } from 'lucide-react';
+import React, { useState } from 'react';
+import {
+  Github,
+  Container,
+  Globe,
+  ShieldCheck,
+  Network,
+  ShipWheel,
+  Box
+} from 'lucide-react';
+
+// Clean, minimal nodes arranged in an intuitive Y-convergence into Kubernetes
+const NODES = [
+  // Left Branch: Code Push -> Build
+  {
+    id: 'github',
+    label: 'Git Push',
+    sub: 'GitHub Repo',
+    icon: Github,
+    x: 155,
+    y: 120,
+    color: '#d4af37', // Gold
+    detail: 'Source code commit triggers automated GitOps workflow'
+  },
+  {
+    id: 'docker',
+    label: 'CI & Docker',
+    sub: 'Build & Registry',
+    icon: Container,
+    x: 155,
+    y: 290,
+    color: '#8ea072', // Olive
+    detail: 'Automated tests, container build & AWS ECR image push'
+  },
+
+  // Right Branch: User Traffic -> CDN -> WAF -> Load Balancer
+  {
+    id: 'cdn',
+    label: 'Global CDN',
+    sub: 'Edge Cache',
+    icon: Globe,
+    x: 445,
+    y: 120,
+    color: '#38bdf8', // Sky
+    detail: 'Low-latency global edge delivery & static caching'
+  },
+  {
+    id: 'waf',
+    label: 'WAF Firewall',
+    sub: 'DDoS & Security',
+    icon: ShieldCheck,
+    x: 445,
+    y: 250,
+    color: '#10b981', // Emerald
+    detail: 'Filters malicious traffic & blocks SQLi / DDoS at the edge'
+  },
+  {
+    id: 'alb',
+    label: 'Load Balancer',
+    sub: 'Ingress Routing',
+    icon: Network,
+    x: 445,
+    y: 380,
+    color: '#38968f', // Teal
+    detail: 'SSL termination & multi-zone traffic distribution'
+  },
+
+  // Center Convergence: Kubernetes Cluster
+  {
+    id: 'k8s',
+    label: 'Kubernetes',
+    sub: 'AWS EKS Cluster',
+    icon: ShipWheel,
+    x: 300,
+    y: 515,
+    color: '#3b82f6', // Blue
+    isMain: true,
+    detail: 'Zero-downtime rolling updates & auto-scaled production pods'
+  }
+];
+
+// 3 Minimal Pod Nodes at the bottom
+const PODS = [
+  { id: 'pod1', label: 'Pod 01', x: 160, y: 660 },
+  { id: 'pod2', label: 'Pod 02', x: 300, y: 660 },
+  { id: 'pod3', label: 'Pod 03', x: 440, y: 660 }
+];
+
+// Smooth cubic bezier paths
+const PATHS = [
+  // Left CI/CD Stream (Gold/Olive)
+  { id: 'c-git-doc', d: 'M 155 162 L 155 248', color: '#d4af37', dur: '2.8s' },
+  { id: 'c-doc-k8s', d: 'M 155 332 C 155 435, 255 445, 272 478', color: '#8ea072', dur: '3.2s' },
+
+  // Right Traffic Stream (Cyan/Teal)
+  { id: 'c-usr-cdn', d: 'M 445 38 L 445 78', color: '#38bdf8', dur: '1.8s' },
+  { id: 'c-cdn-waf', d: 'M 445 162 L 445 208', color: '#38bdf8', dur: '2.2s' },
+  { id: 'c-waf-alb', d: 'M 445 292 L 445 338', color: '#10b981', dur: '2.4s' },
+  { id: 'c-alb-k8s', d: 'M 445 422 C 445 475, 345 465, 328 478', color: '#38968f', dur: '2.6s' },
+
+  // K8s to Pods Fan-out
+  { id: 'c-k8s-p1', d: 'M 275 552 C 235 595, 160 595, 160 632', color: '#3b82f6', dur: '2.5s' },
+  { id: 'c-k8s-p2', d: 'M 300 560 L 300 632', color: '#3b82f6', dur: '2.2s' },
+  { id: 'c-k8s-p3', d: 'M 325 552 C 365 595, 440 595, 440 632', color: '#3b82f6', dur: '2.7s' }
+];
+
+const hexPoints = (r) =>
+  Array.from({ length: 6 }, (_, i) => {
+    const a = (Math.PI / 3) * i - Math.PI / 6;
+    return `${(r * Math.cos(a)).toFixed(1)},${(r * Math.sin(a)).toFixed(1)}`;
+  }).join(' ');
 
 const CyberPipeline = () => {
-  const [hoveredNode, setHoveredNode] = useState(null);
-  const [gridOffset, setGridOffset] = useState(0);
-
-  // Animate perspective grid
-  useEffect(() => {
-    let animationFrame;
-    const animate = () => {
-      setGridOffset((prev) => (prev + 0.2) % 40);
-      animationFrame = requestAnimationFrame(animate);
-    };
-    animate();
-    return () => cancelAnimationFrame(animationFrame);
-  }, []);
-
-  // 1. Nodes in Zig-Zag "Waterfall" Pattern
-  const nodes = [
-    {
-      id: 'github',
-      label: 'GitHub',
-      icon: Github,
-      x: 300, y: 80,
-      brandColor: '#F05032',
-      techSpecs: ['Source Control', 'PR Automation', 'Security Scan']
-    },
-    {
-      id: 'jenkins',
-      label: 'Jenkins',
-      icon: Settings,
-      x: 150, y: 200,
-      brandColor: '#D24939',
-      techSpecs: ['CI Pipelines', 'Unit Testing', 'Artifact Builds']
-    },
-    {
-      id: 'docker',
-      label: 'Docker',
-      icon: Container,
-      x: 450, y: 320,
-      brandColor: '#2496ED',
-      techSpecs: ['Containerization', 'Image Optimization', 'Registry']
-    },
-    {
-      id: 'k8s',
-      label: 'Kubernetes',
-      icon: ShipWheel,
-      x: 150, y: 440,
-      brandColor: '#326CE5',
-      techSpecs: ['Orchestration', 'Auto-scaling', 'Service Mesh']
-    },
-    {
-      id: 'aws',
-      label: 'AWS',
-      icon: Cloud,
-      x: 300, y: 560,
-      brandColor: '#FF9900',
-      techSpecs: ['Cloud Infra', 'Serverless', 'Global CDN']
-    }
-  ];
-
-  // 2. Connections (Dual-Line Cabling)
-  // Adjusted coordinates for logic flow
-  const connections = [
-    { id: 'c1', from: 'github', to: 'jenkins', path: 'M 300 110 C 300 160, 150 120, 150 170' },
-    { id: 'c2', from: 'jenkins', to: 'docker', path: 'M 150 230 C 150 280, 450 240, 450 290' },
-    { id: 'c3', from: 'docker', to: 'k8s', path: 'M 450 350 C 450 400, 150 360, 150 410' },
-    { id: 'c4', from: 'k8s', to: 'aws', path: 'M 150 470 C 150 520, 300 480, 300 530' }
-  ];
-
-  // Hexagon Generator
-  const createHexagon = (r) => {
-    const a = 2 * Math.PI / 6;
-    return Array.from({ length: 6 }, (_, i) => [
-      r * Math.cos(a * i),
-      r * Math.sin(a * i)
-    ]).map(p => p.join(',')).join(' ');
-  };
+  const [hovered, setHovered] = useState(null);
+  const activeNode = NODES.find((n) => n.id === hovered);
 
   return (
     <div
-      className="w-full h-full flex items-center justify-center bg-[#030712] relative overflow-hidden rounded-xl border border-gray-800 shadow-2xl"
+      style={{
+        width: '100%',
+        height: '100%',
+        position: 'relative',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}
     >
-
-      {/* Background: Deep Void with Fading Binary/Hex Codes */}
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        {/* Simple gradient overlay for depth */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#030712] via-[#0f172a] to-[#030712] opacity-80"></div>
-      </div>
-
       <svg
-        viewBox="0 -100 600 750"
-        className="w-full h-full max-w-2xl z-10"
+        viewBox="0 0 600 720"
+        style={{ width: '100%', maxWidth: '580px', height: 'auto', overflow: 'visible' }}
         preserveAspectRatio="xMidYMid meet"
       >
         <defs>
-          {/* Neon Glow Filter */}
-          <filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="3.5" result="coloredBlur" />
+          <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
             <feMerge>
-              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-
-          <filter id="strong-glow" x="-100%" y="-100%" width="300%" height="300%">
-            <feGaussianBlur stdDeviation="6" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-          </filter>
-
-          {/* Gradients */}
-          <linearGradient id="energyGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#06b6d4" />  {/* Cyan */}
-            <stop offset="100%" stopColor="#a855f7" /> {/* Purple */}
-          </linearGradient>
-
-          <linearGradient id="hologramGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="rgba(6, 182, 212, 0)" />
-            <stop offset="50%" stopColor="rgba(6, 182, 212, 0.1)" />
-            <stop offset="100%" stopColor="rgba(6, 182, 212, 0)" />
-          </linearGradient>
-
-          {/* Grid Pattern */}
-          <pattern id="gridPattern" width="40" height="40" patternUnits="userSpaceOnUse" y={gridOffset}>
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" strokeWidth="0.5" />
-          </pattern>
         </defs>
 
-        {/* Perspective Floor */}
-        <g transform="perspective(600px) rotateX(25deg)">
-          <rect x="-200" y="-100" width="1000" height="1000" fill="url(#gridPattern)" opacity="0.4" />
+        {/* Minimal Stream Headers at Top */}
+        <text
+          x="155"
+          y="55"
+          textAnchor="middle"
+          fill="#d4af37"
+          fontSize="10"
+          fontWeight="600"
+          fontFamily="'Inter', sans-serif"
+          letterSpacing="2px"
+          opacity="0.8"
+        >
+          CODE DEPLOY
+        </text>
+
+        <text
+          x="445"
+          y="26"
+          textAnchor="middle"
+          fill="#38bdf8"
+          fontSize="10"
+          fontWeight="600"
+          fontFamily="'Inter', sans-serif"
+          letterSpacing="2px"
+          opacity="0.85"
+        >
+          USER TRAFFIC
+        </text>
+
+        {/* Subtle Blocked Threat Animation at WAF */}
+        <g>
+          <circle r="2.8" fill="#ef4444" filter="url(#softGlow)">
+            <animateMotion
+              dur="2.8s"
+              repeatCount="indefinite"
+              path="M 462 165 L 462 212 L 502 196"
+            />
+            <animate
+              attributeName="opacity"
+              values="0;0.9;0"
+              keyTimes="0;0.65;1"
+              dur="2.8s"
+              repeatCount="indefinite"
+            />
+          </circle>
         </g>
 
-        {/* Connections (Data Highways) */}
-        {connections.map((conn) => {
-          return (
-            <g key={conn.id}>
-              {/* Static Dark Rail */}
-              <path
-                d={conn.path}
-                fill="none"
-                stroke="#0f172a"
-                strokeWidth="8"
-                strokeLinecap="round"
-                opacity="0.8"
-              />
-              <path
-                d={conn.path}
-                fill="none"
-                stroke="#1e293b"
-                strokeWidth="4"
-                strokeLinecap="round"
-              />
+        {/* Smooth Glowing Connection Lines */}
+        {PATHS.map((p) => (
+          <g key={p.id}>
+            {/* Subtle base rail */}
+            <path
+              d={p.d}
+              fill="none"
+              stroke="rgba(255, 255, 255, 0.07)"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+            {/* Soft colored guide */}
+            <path
+              d={p.d}
+              fill="none"
+              stroke={p.color}
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              opacity="0.35"
+            />
+            {/* Flowing light pulse */}
+            <circle r="3" fill="#ffffff" filter="url(#softGlow)">
+              <animateMotion dur={p.dur} repeatCount="indefinite" path={p.d} />
+            </circle>
+          </g>
+        ))}
 
-              {/* Pulsing Energy Cable */}
-              <path
-                d={conn.path}
-                fill="none"
-                stroke="url(#energyGradient)"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeDasharray="15, 15"
-                filter="url(#neon-glow)"
-                opacity="1"
-              >
-                <animate
-                  attributeName="stroke-dashoffset"
-                  from="30"
-                  to="0"
-                  dur="1.5s"
-                  repeatCount="indefinite"
-                  calcMode="linear"
-                />
-              </path>
-
-              {/* Data Packets (Comets on the line) */}
-              <circle r="3" fill="#fff" filter="url(#neon-glow)">
-                <animateMotion
-                  dur="4s"
-                  repeatCount="indefinite"
-                  path={conn.path}
-                  keyPoints="0;1"
-                  keyTimes="0;1"
-                  calcMode="linear"
-                />
-              </circle>
-              {/* Trail for the packet */}
-              <path d={conn.path} stroke="url(#energyGradient)" strokeWidth="3" fill="none" strokeDasharray="0, 100" opacity="0.5">
-                <animate
-                  attributeName="stroke-dasharray"
-                  values="0,100; 20,100; 0,100"
-                  dur="4s"
-                  repeatCount="indefinite"
-                />
-                <animateMotion
-                  dur="4s"
-                  repeatCount="indefinite"
-                  path={conn.path}
-                  calcMode="linear"
-                />
-              </path>
+        {/* Minimal Kubernetes Pod Nodes at Bottom */}
+        {PODS.map((pod) => (
+          <g key={pod.id} transform={`translate(${pod.x}, ${pod.y})`}>
+            <polygon
+              points={hexPoints(20)}
+              fill="rgba(15, 18, 26, 0.85)"
+              stroke="rgba(59, 130, 246, 0.5)"
+              strokeWidth="1.2"
+            />
+            <g transform="translate(-8, -8)" style={{ pointerEvents: 'none' }}>
+              <Box width={16} height={16} color="#60a5fa" strokeWidth={1.6} />
             </g>
-          );
-        })}
+            <text
+              y="34"
+              textAnchor="middle"
+              fill="rgba(255, 255, 255, 0.6)"
+              fontSize="10"
+              fontWeight="500"
+              fontFamily="'Inter', sans-serif"
+            >
+              {pod.label}
+            </text>
+          </g>
+        ))}
 
-        {/* Nodes */}
-        {nodes.map((node) => {
-          const isHovered = hoveredNode === node.id;
+        {/* Main Architecture Hexagon Nodes */}
+        {NODES.map((node) => {
+          const isHovered = hovered === node.id;
           const Icon = node.icon;
+          const hexRadius = node.isMain ? 40 : 34;
+
+          // Position text cleanly to the left for left branch, right for right branch, and beside K8s
+          const labelX = node.isMain ? 0 : node.x < 300 ? -48 : 48;
+          const labelY = node.isMain ? -54 : -3;
+          const anchor = node.isMain ? 'middle' : node.x < 300 ? 'end' : 'start';
 
           return (
             <g
               key={node.id}
               transform={`translate(${node.x}, ${node.y})`}
-              onMouseEnter={() => setHoveredNode(node.id)}
-              onMouseLeave={() => setHoveredNode(null)}
-              className="cursor-pointer"
+              onMouseEnter={() => setHovered(node.id)}
+              onMouseLeave={() => setHovered(null)}
+              style={{ cursor: 'pointer' }}
             >
-              {/* Holographic Card (Projects Upwards) */}
-              <g
-                transform={`translate(0, ${isHovered ? -110 : -90})`}
-                opacity={isHovered ? 1 : 0}
-                style={{ transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)' }}
-                filter="url(#strong-glow)"
-              >
-                {isHovered && (
-                  <>
-                    <path
-                      d="M 0 55 L 0 75"
-                      stroke={node.brandColor}
-                      strokeWidth="1"
-                      strokeDasharray="2 2"
-                    />
-                    <g>
-                      {/* Glass Card Background */}
-                      <defs>
-                        <linearGradient id={`grad-${node.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                          <stop offset="0%" stopColor="rgba(30, 41, 59, 0.9)" />
-                          <stop offset="100%" stopColor="rgba(15, 23, 42, 0.95)" />
-                        </linearGradient>
-                      </defs>
-                      <rect
-                        x="-80" y="-60"
-                        width="160" height="100"
-                        rx="4"
-                        fill={`url(#grad-${node.id})`}
-                        stroke={node.brandColor}
-                        strokeWidth="1"
-                      />
-                      {/* Scanline Effect */}
-                      <rect x="-80" y="-60" width="160" height="100" fill="url(#hologramGradient)" opacity="0.3" rx="4" />
-
-                      {/* Text Content */}
-                      <text x="0" y="-35" textAnchor="middle" fill="#fff" fontSize="16" fontWeight="bold" fontFamily="monospace" letterSpacing="1px">
-                        {node.label.toUpperCase()}
-                      </text>
-                      <line x1="-60" y1="-25" x2="60" y2="-25" stroke={node.brandColor} strokeWidth="0.5" opacity="0.5" />
-
-                      {node.techSpecs.map((spec, i) => (
-                        <text key={i} x="0" y={-5 + (i * 18)} textAnchor="middle" fill="#cbd5e1" fontSize="11" fontFamily="sans-serif">
-                          &gt; {spec}
-                        </text>
-                      ))}
-                    </g>
-                  </>
-                )}
-              </g>
-
-              {/* Orbital Rings */}
-              {/* Outer fast ring */}
+              {/* Delicate Outer Orbit Ring */}
               <circle
-                r="55"
+                r={hexRadius + 9}
                 fill="none"
-                stroke={isHovered ? node.brandColor : "#334155"}
+                stroke={node.color}
                 strokeWidth="1"
-                strokeDasharray="20 40"
-                opacity={isHovered ? 0.8 : 0.2}
+                strokeDasharray="10 18"
+                opacity={isHovered ? 0.75 : 0.22}
               >
                 <animateTransform
                   attributeName="transform"
-                  attributeType="XML"
                   type="rotate"
                   from="0 0 0"
                   to="360 0 0"
-                  dur={isHovered ? "3s" : "15s"}
+                  dur={isHovered ? '6s' : '22s'}
                   repeatCount="indefinite"
                 />
               </circle>
 
-              {/* Inner opposing ring */}
-              <circle
-                r="48"
-                fill="none"
-                stroke={isHovered ? "#fff" : "#475569"}
-                strokeWidth="1"
-                strokeDasharray="4 8"
-                opacity={isHovered ? 0.6 : 0.2}
-              >
-                <animateTransform
-                  attributeName="transform"
-                  attributeType="XML"
-                  type="rotate"
-                  from="360 0 0"
-                  to="0 0 0"
-                  dur={isHovered ? "4s" : "20s"}
-                  repeatCount="indefinite"
-                />
-              </circle>
-
-              {/* Base Hexagon (Glassmorphism) */}
-              <g className="transition-transform duration-300" transform={isHovered ? 'scale(1.1)' : 'scale(1)'}>
-                <polygon
-                  points={createHexagon(38)}
-                  fill="rgba(15, 23, 42, 0.6)"
-                  stroke={isHovered ? "#fff" : node.brandColor}
-                  strokeWidth={isHovered ? 2 : 1.5}
-                  filter="url(#neon-glow)"
-                  className="transition-all duration-300"
-                />
-                {/* Inner hex fill for solid feel if needed, but keeping it glass for now */}
-              </g>
+              {/* Glass Hexagon */}
+              <polygon
+                points={hexPoints(hexRadius)}
+                fill={isHovered ? 'rgba(24, 28, 38, 0.95)' : 'rgba(13, 15, 22, 0.85)'}
+                stroke={isHovered ? '#ffffff' : node.color}
+                strokeWidth={isHovered ? '2' : '1.5'}
+                filter="url(#softGlow)"
+              />
 
               {/* Icon */}
-              <foreignObject x="-30" y="-20" width="60" height="60" style={{ pointerEvents: 'none' }}>
-                <div
-                  className="w-full h-full flex items-center justify-center"
-                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                >
-                  <Icon
-                    size={38}
-                    color={isHovered ? "#fff" : node.brandColor}
-                    className="transition-colors duration-300"
-                    strokeWidth={1.5}
-                    style={{ filter: isHovered ? 'drop-shadow(0 0 8px rgba(255,255,255,0.5))' : 'none' }}
-                  />
-                </div>
-              </foreignObject>
-
-              {/* Label below node */}
-              <text
-                y="65"
-                textAnchor="middle"
-                fill={isHovered ? "#fff" : "#94a3b8"}
-                fontSize="12"
-                fontWeight="600"
-                fontFamily="monospace"
-                className="transition-colors duration-300"
-                style={{ textShadow: isHovered ? `0 0 10px ${node.brandColor}` : 'none' }}
+              <g
+                transform={`translate(${node.isMain ? -15 : -13}, ${node.isMain ? -15 : -13})`}
+                style={{ pointerEvents: 'none' }}
               >
-                {node.label}
-              </text>
+                <Icon
+                  width={node.isMain ? 30 : 26}
+                  height={node.isMain ? 30 : 26}
+                  color={isHovered ? '#ffffff' : node.color}
+                  strokeWidth={1.6}
+                />
+              </g>
+
+              {/* Clean Minimal Label */}
+              <g transform={`translate(${labelX}, ${labelY})`} style={{ pointerEvents: 'none' }}>
+                <text
+                  x="0"
+                  y="0"
+                  textAnchor={anchor}
+                  fill={isHovered ? '#ffffff' : '#e2e8f0'}
+                  fontSize="12.5"
+                  fontWeight="600"
+                  fontFamily="'Inter', sans-serif"
+                >
+                  {node.label}
+                </text>
+                <text
+                  x="0"
+                  y="15"
+                  textAnchor={anchor}
+                  fill="rgba(255, 255, 255, 0.45)"
+                  fontSize="10"
+                  fontWeight="400"
+                  fontFamily="'Inter', sans-serif"
+                >
+                  {node.sub}
+                </text>
+              </g>
             </g>
           );
         })}
       </svg>
 
-      {/* CSS Styles for animations that need @keyframes */}
-      <style>{`
-        @keyframes cometFade {
-          0% { opacity: 0; transform: translateY(0) translateX(0); }
-          50% { opacity: 0.8; }
-          100% { opacity: 0; transform: translateY(100px) translateX(100px); }
-        }
-        .animate-comet {
-          animation: cometFade linear infinite;
-        }
-      `}</style>
+      {/* Subtle Single-Line Tooltip Pill on Hover */}
+      {activeNode && (
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '4px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            padding: '7px 18px',
+            borderRadius: '999px',
+            background: 'rgba(14, 16, 22, 0.9)',
+            border: `1px solid ${activeNode.color}66`,
+            backdropFilter: 'blur(8px)',
+            fontSize: '11.5px',
+            color: '#e2e8f0',
+            whiteSpace: 'nowrap',
+            pointerEvents: 'none',
+            boxShadow: '0 8px 24px rgba(0,0,0,0.6)'
+          }}
+        >
+          <strong style={{ color: activeNode.color }}>{activeNode.label}:</strong>{' '}
+          {activeNode.detail}
+        </div>
+      )}
     </div>
   );
 };
