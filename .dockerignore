@@ -1,0 +1,7 @@
+.git
+**/node_modules
+client/dist
+server/public
+legacy_backup
+for_gemini
+.env
